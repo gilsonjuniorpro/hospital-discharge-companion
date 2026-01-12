@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Local configuration
+local.properties
+*.jks
+*.keystore
+
+# Kotlin
+.kotlin/
+
+# Logs and temporary artifacts
+*.log
+captures/

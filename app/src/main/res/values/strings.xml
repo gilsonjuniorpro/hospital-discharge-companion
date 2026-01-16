@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hospital Discharge Companion</string>
+    <string name="app_tagline">Coordinated post-discharge recovery across patient, family, nursing, and physician care teams</string>
+    <string name="shell_ready_title">Post-Discharge Care Coordination</string>
+    <string name="shell_ready_subtitle">Offline-first clinical workflow workspace initialized.</string>
+    <string name="disclaimer_short">Educational demo only. Not a medical device or clinical system.</string>
+</resources>

@@ -2,7 +2,47 @@
 <resources>
     <string name="app_name">Hospital Discharge Companion</string>
     <string name="app_tagline">Coordinated post-discharge recovery across patient, family, nursing, and physician care teams</string>
-    <string name="shell_ready_title">Post-Discharge Care Coordination</string>
-    <string name="shell_ready_subtitle">Offline-first clinical workflow workspace initialized.</string>
+    <string name="profile_subtitle">One discharge episode, four coordinated clinical roles</string>
     <string name="disclaimer_short">Educational demo only. Not a medical device or clinical system.</string>
+    <string name="disclaimer_banner">Educational demo only — not a medical device, not for real clinical care, and no real emergency dispatch.</string>
+    <string name="offline_mode_badge">Offline mock backend</string>
+    <string name="phi_badge_label">Simulated PHI</string>
+    <string name="phi_badge_a11y">Simulated protected health information banner for training</string>
+
+    <string name="section_language">Language</string>
+    <string name="section_seeded_episode">Active Discharge Episode</string>
+    <string name="section_choose_role">Select Experience Role</string>
+    <string name="episode_day_unit_format">Day %1$d post-discharge · %2$s</string>
+
+    <string name="locale_en">English</string>
+    <string name="locale_pt_br">Português (BR)</string>
+    <string name="locale_es">Español</string>
+    <string name="locale_fr">Français</string>
+
+    <string name="role_patient_title">Patient</string>
+    <string name="role_patient_desc">Follow your discharge plan, confirm medications, log daily vitals, and message your care team.</string>
+    <string name="role_family_title">Family Caregiver</string>
+    <string name="role_family_desc">Assist with doses and check-ins, track shared alerts, and escalate concerns on behalf of the patient.</string>
+    <string name="role_nurse_title">Nurse</string>
+    <string name="role_nurse_desc">Triage telemonitoring queues, review adherence, send reminders, and escalate high-risk alerts.</string>
+    <string name="role_physician_title">Physician</string>
+    <string name="role_physician_desc">Review escalated alerts, amend care plans with versioned sign-off, and document clinical disposition.</string>
+    <string name="role_last_used">Last active</string>
+
+    <string name="risk_low">Low Risk</string>
+    <string name="risk_medium">Medium Risk</string>
+    <string name="risk_high">High Risk</string>
+
+    <string name="ehr_status_synced">EHR Synced</string>
+    <string name="ehr_status_pending">EHR Pending</string>
+    <string name="ehr_status_conflict">EHR Conflict</string>
+    <string name="ehr_status_failed">EHR Failed</string>
+
+    <string name="red_flag_card_title">When to Escalate or Seek Urgent Care</string>
+    <string name="red_flag_copy_disclaimer">Educational guidance copy only. This demo never places emergency calls.</string>
+
+    <string name="action_retry">Retry</string>
+    <string name="action_demo_controls">Demo Controls &amp; About</string>
+    <string name="action_switch_role">Switch Role</string>
+    <string name="action_back">Back</string>
 </resources>

@@ -19,12 +19,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.UserRole
+import com.hospitaldischargecompanion.feature.patient.PatientHomeScreen
 import com.hospitaldischargecompanion.feature.profile.ProfileSelectionScreen
 
 @Composable
 fun HdcNavHost(
     navController: NavHostController = rememberNavController()
 ) {
+    val navigateToProfile: () -> Unit = {
+        navController.navigate(HdcRoute.ProfileSelection) {
+            popUpTo(0) { inclusive = true }
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = HdcRoute.ProfileSelection
@@ -44,38 +51,55 @@ fun HdcNavHost(
         }
 
         composable<HdcRoute.PatientHome> {
-            RolePlaceholderScreen(
-                title = stringResource(R.string.role_patient_title),
-                onBack = { navController.popBackStack() }
+            PatientHomeScreen(
+                onSwitchRole = navigateToProfile,
+                onOpenDemoControls = { navController.navigate(HdcRoute.DemoControls) },
+                onOpenCarePlan = { epId -> navController.navigate(HdcRoute.CarePlan(epId)) },
+                onOpenMedications = { epId -> navController.navigate(HdcRoute.Medications(epId)) },
+                onOpenTelemonitoring = { epId -> navController.navigate(HdcRoute.Telemonitoring(epId)) },
+                onOpenAlerts = { epId -> navController.navigate(HdcRoute.Alerts(epId)) },
+                onOpenMessaging = { epId -> navController.navigate(HdcRoute.Messaging(epId)) },
+                onOpenAppointments = { epId -> navController.navigate(HdcRoute.Appointments(epId)) },
+                onOpenEducation = { epId -> navController.navigate(HdcRoute.Education(epId)) },
+                onOpenEhrSync = { epId -> navController.navigate(HdcRoute.EhrSync(epId)) }
             )
         }
 
         composable<HdcRoute.FamilyHome> {
-            RolePlaceholderScreen(
-                title = stringResource(R.string.role_family_title),
-                onBack = { navController.popBackStack() }
-            )
+            RolePlaceholderScreen(stringResource(R.string.role_family_title), navigateToProfile)
         }
-
         composable<HdcRoute.NurseWorkstation> {
-            RolePlaceholderScreen(
-                title = stringResource(R.string.role_nurse_title),
-                onBack = { navController.popBackStack() }
-            )
+            RolePlaceholderScreen(stringResource(R.string.role_nurse_title), navigateToProfile)
         }
-
         composable<HdcRoute.PhysicianWorkstation> {
-            RolePlaceholderScreen(
-                title = stringResource(R.string.role_physician_title),
-                onBack = { navController.popBackStack() }
-            )
+            RolePlaceholderScreen(stringResource(R.string.role_physician_title), navigateToProfile)
         }
-
+        composable<HdcRoute.CarePlan> {
+            RolePlaceholderScreen(stringResource(R.string.nav_care_plan)) { navController.popBackStack() }
+        }
+        composable<HdcRoute.Medications> {
+            RolePlaceholderScreen(stringResource(R.string.nav_medications)) { navController.popBackStack() }
+        }
+        composable<HdcRoute.Telemonitoring> {
+            RolePlaceholderScreen(stringResource(R.string.nav_telemonitoring)) { navController.popBackStack() }
+        }
+        composable<HdcRoute.Alerts> {
+            RolePlaceholderScreen(stringResource(R.string.nav_alerts)) { navController.popBackStack() }
+        }
+        composable<HdcRoute.Messaging> {
+            RolePlaceholderScreen(stringResource(R.string.nav_messaging)) { navController.popBackStack() }
+        }
+        composable<HdcRoute.Appointments> {
+            RolePlaceholderScreen(stringResource(R.string.nav_appointments)) { navController.popBackStack() }
+        }
+        composable<HdcRoute.Education> {
+            RolePlaceholderScreen(stringResource(R.string.nav_education)) { navController.popBackStack() }
+        }
+        composable<HdcRoute.EhrSync> {
+            RolePlaceholderScreen(stringResource(R.string.nav_ehr_sync)) { navController.popBackStack() }
+        }
         composable<HdcRoute.DemoControls> {
-            RolePlaceholderScreen(
-                title = stringResource(R.string.action_demo_controls),
-                onBack = { navController.popBackStack() }
-            )
+            RolePlaceholderScreen(stringResource(R.string.action_demo_controls)) { navController.popBackStack() }
         }
     }
 }
@@ -96,7 +120,7 @@ private fun RolePlaceholderScreen(
         ) {
             Text(text = title, style = MaterialTheme.typography.headlineMedium)
             Button(onClick = onBack) {
-                Text(text = stringResource(R.string.action_switch_role))
+                Text(text = stringResource(R.string.action_back))
             }
         }
     }

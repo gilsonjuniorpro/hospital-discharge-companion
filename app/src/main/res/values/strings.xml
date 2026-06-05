@@ -45,4 +45,29 @@
     <string name="action_demo_controls">Demo Controls &amp; About</string>
     <string name="action_switch_role">Switch Role</string>
     <string name="action_back">Back</string>
+
+    <string name="patient_home_title">Patient Recovery</string>
+    <string name="empty_episode_title">No Discharge Episode Found</string>
+    <string name="empty_episode_subtitle">Reset the demo or pick a seeded episode from Profile Selection.</string>
+    <string name="discharge_snapshot_meta">Discharged %1$s · %2$s · Plan v%3$d</string>
+    <string name="discharge_care_team_format">Attending: %1$s · Primary Nurse: %2$s</string>
+    <string name="care_circle_code_format">Care Circle Code: %1$s</string>
+    <string name="patient_active_alerts_banner">%1$d Active Clinical Alert(s)</string>
+    <string name="metric_med_adherence">Medication Adherence</string>
+    <string name="metric_med_count_format">%1$d of %2$d active doses</string>
+    <string name="metric_care_tasks">Care Plan Tasks</string>
+    <string name="metric_due_tasks_format">%1$d due or overdue</string>
+    <string name="latest_vitals_title">Latest Telemonitoring Check-In</string>
+    <string name="latest_vitals_line">BP %1$d/%2$d mmHg · HR %3$d bpm · SpO2 %4$d%% · %5$.1f kg</string>
+    <string name="logged_by_format">Logged by %1$s</string>
+    <string name="section_care_modules">Care Modules</string>
+
+    <string name="nav_care_plan">Care Plan</string>
+    <string name="nav_medications">Medications</string>
+    <string name="nav_telemonitoring">Vitals &amp; Check-In</string>
+    <string name="nav_alerts">Alerts</string>
+    <string name="nav_messaging">Care Team Chat</string>
+    <string name="nav_appointments">Appointments</string>
+    <string name="nav_education">Education</string>
+    <string name="nav_ehr_sync">EHR Sync</string>
 </resources>

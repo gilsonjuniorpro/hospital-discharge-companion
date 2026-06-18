@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.UserRole
+import com.hospitaldischargecompanion.feature.careplan.CarePlanScreen
 import com.hospitaldischargecompanion.feature.patient.PatientHomeScreen
 import com.hospitaldischargecompanion.feature.profile.ProfileSelectionScreen
 
@@ -75,7 +76,7 @@ fun HdcNavHost(
             RolePlaceholderScreen(stringResource(R.string.role_physician_title), navigateToProfile)
         }
         composable<HdcRoute.CarePlan> {
-            RolePlaceholderScreen(stringResource(R.string.nav_care_plan)) { navController.popBackStack() }
+            CarePlanScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.Medications> {
             RolePlaceholderScreen(stringResource(R.string.nav_medications)) { navController.popBackStack() }

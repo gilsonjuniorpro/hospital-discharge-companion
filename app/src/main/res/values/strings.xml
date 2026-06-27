@@ -85,4 +85,19 @@
     <string name="action_reopen">Reopen</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_close">Close</string>
+
+    <string name="med_adherence_banner_format">Adherence %1$d%% (%2$d/%3$d taken)</string>
+    <string name="med_warnings_header">Clinical Interaction &amp; Therapy Warnings</string>
+    <string name="med_list_header">Discharge Medications</string>
+    <string name="med_history_header">Recent Dose Log</string>
+    <string name="med_food_format">Food / Diet: %1$s</string>
+    <string name="med_allergen_format">Safety / Allergen: %1$s</string>
+    <string name="med_supply_format">Estimated supply: %1$d days</string>
+    <string name="med_refill_action">Request Refill</string>
+    <string name="med_out_of_stock_action">Out of Stock · Resolve</string>
+    <string name="med_last_action_format">%1$s · %2$s</string>
+    <string name="med_pillbox_attached">Mock pill-box photo attached</string>
+    <string name="med_attach_pillbox">Attach mock pill-box photo</string>
+    <string name="action_take">Take</string>
+    <string name="action_snooze">Snooze</string>
 </resources>

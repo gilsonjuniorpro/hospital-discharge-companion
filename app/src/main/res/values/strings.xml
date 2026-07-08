@@ -100,4 +100,26 @@
     <string name="med_attach_pillbox">Attach mock pill-box photo</string>
     <string name="action_take">Take</string>
     <string name="action_snooze">Snooze</string>
+
+    <string name="vitals_alert_fired_title">%1$d Clinical Alert(s) Triggered</string>
+    <string name="vitals_saved_banner">Check-in recorded and queued for EHR sync.</string>
+    <string name="vitals_baseline_title">Today vs. Discharge Baseline</string>
+    <string name="vitals_baseline_summary">Dry weight baseline: %1$.1f kg · Latest: %2$.1f kg (%3$+.1f kg)</string>
+    <string name="vitals_chart_legend">Teal: Systolic BP (mmHg) · Coral: Weight (kg)</string>
+    <string name="vitals_checkin_form_title">Log Symptoms &amp; Vitals</string>
+    <string name="vitals_demo_abnormal_preset">Simulate High BP</string>
+    <string name="vital_systolic_label">Systolic (mmHg)</string>
+    <string name="vital_diastolic_label">Diastolic (mmHg)</string>
+    <string name="vital_hr_label">Heart Rate (bpm)</string>
+    <string name="vital_spo2_label">SpO2 (%)</string>
+    <string name="vital_weight_label">Weight (kg)</string>
+    <string name="vital_temp_c_label">Temp (°C)</string>
+    <string name="vital_dyspnea_slider">Shortness of breath severity: %1$d / 5</string>
+    <string name="vital_pain_slider">Pain score: %1$d / 10</string>
+    <string name="vital_notes_hint">Symptom notes (e.g., ankle swelling, dizziness)</string>
+    <string name="action_submit_checkin">Submit Check-In</string>
+    <string name="wearables_section_title">Connected Wearables (Phase 2 Stub)</string>
+    <string name="action_sync_wearable_stub">Simulate BLE Sync</string>
+    <string name="vitals_history_title">Check-In History</string>
+    <string name="vital_flag_abnormal">Out of Range</string>
 </resources>

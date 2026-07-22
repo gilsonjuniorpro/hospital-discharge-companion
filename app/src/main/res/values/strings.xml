@@ -122,4 +122,31 @@
     <string name="action_sync_wearable_stub">Simulate BLE Sync</string>
     <string name="vitals_history_title">Check-In History</string>
     <string name="vital_flag_abnormal">Out of Range</string>
+
+    <string name="alerts_empty_title">All Clear</string>
+    <string name="alerts_empty_subtitle">No open or historical clinical alerts for this discharge episode.</string>
+    <string name="alert_guidance_format">Guidance: %1$s</string>
+    <string name="alert_audit_trail_title">Audit Trail</string>
+    <string name="action_acknowledge">Acknowledge</string>
+    <string name="action_escalate">Escalate</string>
+    <string name="action_resolve">Resolve</string>
+
+    <string name="family_home_title">Family Caregiver Hub</string>
+    <string name="family_caring_for_format">Supporting %1$s</string>
+    <string name="family_dual_attribution_note">Actions logged here automatically record caregiver dual attribution.</string>
+    <string name="family_assist_meds">Assist Meds</string>
+    <string name="family_log_vitals">Log Vitals</string>
+    <string name="family_escalate_nurse">Escalate to Nurse</string>
+    <string name="family_shared_alerts">Shared Care Alerts</string>
+    <string name="family_pending_tasks">Today\'s Care Tasks</string>
+    <string name="family_care_circle_title">Care Circle Members</string>
+    <string name="family_permission_format">Permission: %1$s</string>
+    <string name="family_change_permission">Cycle Permission</string>
+    <string name="family_join_by_code_title">Accept Care-Circle Invite Code</string>
+    <string name="family_invite_code_hint">Demo code (e.g., HDC-HF-402)</string>
+    <string name="family_caregiver_name_hint">Caregiver full name</string>
+    <string name="action_join_care_circle">Join Care Circle</string>
+    <string name="action_view_all">View All</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_revoke">Revoke</string>
 </resources>

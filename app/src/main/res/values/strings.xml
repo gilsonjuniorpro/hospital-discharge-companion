@@ -163,4 +163,22 @@
     <string name="filter_high_risk">High Risk</string>
     <string name="filter_overdue">Overdue</string>
     <string name="filter_open_alerts">Open Alerts</string>
+
+    <string name="physician_workstation_title">Physician Escalations</string>
+    <string name="physician_workstation_subtitle">High-risk review, care plan sign-off &amp; disposition</string>
+    <string name="physician_escalated_queue_title">Escalated Queue (%1$d)</string>
+    <string name="physician_queue_empty_title">No Escalated High-Risk Alerts</string>
+    <string name="physician_queue_empty_subtitle">Noise-reduced physician queue is currently clear.</string>
+    <string name="physician_open_sheet">Inspect Sheet</string>
+    <string name="physician_clinical_sheet_title">Clinical Sheet</string>
+    <string name="physician_med_count_format">Active discharge meds: %1$d · Disposition: %2$s</string>
+    <string name="physician_inspect_care_plan">View Full Care Plan</string>
+    <string name="physician_amend_title">Amend Care Plan &amp; Sign Off</string>
+    <string name="disposition_continue_home">Continue Home</string>
+    <string name="disposition_earlier_followup">Earlier Follow-Up</string>
+    <string name="disposition_advise_er">Advise ER (Copy Only)</string>
+    <string name="physician_amend_summary_hint">Amendment rationale</string>
+    <string name="physician_amend_task_hint">New care-plan task title</string>
+    <string name="physician_amend_redflag_hint">Optional additional red flag</string>
+    <string name="physician_sign_off_action">Sign Off New Care Plan Revision</string>
 </resources>

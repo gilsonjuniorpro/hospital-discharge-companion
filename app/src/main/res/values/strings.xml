@@ -181,4 +181,18 @@
     <string name="physician_amend_task_hint">New care-plan task title</string>
     <string name="physician_amend_redflag_hint">Optional additional red flag</string>
     <string name="physician_sign_off_action">Sign Off New Care Plan Revision</string>
+
+    <string name="messaging_urgent_alert_banner">Urgent / Critical clinical alert is open on this episode.</string>
+    <string name="messaging_clinical_note_badge">Clinical Note</string>
+    <string name="messaging_read_receipt_seen">Read by care team (demo)</string>
+    <string name="messaging_read_receipt_delivered">Delivered to care team</string>
+    <string name="messaging_mark_clinical_note">Mark as clinical note</string>
+    <string name="messaging_input_hint">Write a message to the care team</string>
+    <string name="action_send">Send</string>
+
+    <string name="appointment_requested_slot_format">Requested reschedule slot: %1$s</string>
+    <string name="action_mark_attended">Attended</string>
+    <string name="action_mark_missed">Missed</string>
+    <string name="action_reschedule">Reschedule</string>
+    <string name="action_approve_reschedule">Approve Slot</string>
 </resources>

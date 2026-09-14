@@ -22,6 +22,9 @@ import com.hospitaldischargecompanion.core.demo.UserRole
 import com.hospitaldischargecompanion.feature.alerts.AlertsScreen
 import com.hospitaldischargecompanion.feature.appointments.AppointmentsScreen
 import com.hospitaldischargecompanion.feature.careplan.CarePlanScreen
+import com.hospitaldischargecompanion.feature.demo.DemoControlsScreen
+import com.hospitaldischargecompanion.feature.education.EducationScreen
+import com.hospitaldischargecompanion.feature.ehr.EhrSyncScreen
 import com.hospitaldischargecompanion.feature.family.FamilyHomeScreen
 import com.hospitaldischargecompanion.feature.medications.MedicationScreen
 import com.hospitaldischargecompanion.feature.messaging.MessagingScreen
@@ -124,13 +127,31 @@ fun HdcNavHost(
             AppointmentsScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.Education> {
-            RolePlaceholderScreen(stringResource(R.string.nav_education)) { navController.popBackStack() }
+            EducationScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.EhrSync> {
-            RolePlaceholderScreen(stringResource(R.string.nav_ehr_sync)) { navController.popBackStack() }
+            EhrSyncScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.DemoControls> {
-            RolePlaceholderScreen(stringResource(R.string.action_demo_controls)) { navController.popBackStack() }
+            DemoControlsScreen(
+                onBack = { navController.popBackStack() },
+                onOpenDeepLink = { uri ->
+                    when {
+                        uri.startsWith("hdc://dose/") -> {
+                            val medId = uri.removePrefix("hdc://dose/")
+                            navController.navigate(HdcRoute.Medications("ep-hf-001", medId))
+                        }
+                        uri.startsWith("hdc://alert/") -> {
+                            val alertId = uri.removePrefix("hdc://alert/")
+                            navController.navigate(HdcRoute.Alerts("ep-hf-001", alertId))
+                        }
+                        uri.startsWith("hdc://episode/") -> {
+                            val epId = uri.removePrefix("hdc://episode/")
+                            navController.navigate(HdcRoute.PatientHome(epId))
+                        }
+                    }
+                }
+            )
         }
     }
 }

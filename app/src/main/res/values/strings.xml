@@ -195,4 +195,40 @@
     <string name="action_mark_missed">Missed</string>
     <string name="action_reschedule">Reschedule</string>
     <string name="action_approve_reschedule">Approve Slot</string>
+
+    <string name="education_clinical_detail_toggle">Show Clinician Detail View</string>
+    <string name="education_read_time_format">%1$d min read</string>
+    <string name="education_clinician_detail_header">Clinical Reference Detail</string>
+    <string name="education_teachback_header">Teach-Back Check</string>
+    <string name="action_mark_completed">Mark Completed</string>
+
+    <string name="ehr_fhir_resources_note">Mock FHIR contracts: Patient, Encounter, MedicationRequest, Observation, CarePlan, Appointment, Communication.</string>
+    <string name="ehr_last_sync_format">Last synced: %1$s</string>
+    <string name="ehr_push_outbound">Push Vitals &amp; Adherence</string>
+    <string name="ehr_pull_summary">Pull Summary</string>
+    <string name="ehr_simulator_title">Network &amp; EHR Failure Simulator</string>
+    <string name="sim_mode_ok">Healthy (200)</string>
+    <string name="sim_mode_409">Conflict (409)</string>
+    <string name="sim_mode_401">Unauthorized (401)</string>
+    <string name="sim_mode_timeout">Timeout</string>
+    <string name="sim_mode_offline">Offline</string>
+    <string name="ehr_conflicts_title">Open Observation Conflicts</string>
+    <string name="ehr_keep_local">Keep Local Home Data</string>
+    <string name="ehr_accept_upstream">Accept EHR Version</string>
+    <string name="ehr_sync_log_title">EHR Sync History</string>
+
+    <string name="demo_reset_title">Reset Demonstration Data</string>
+    <string name="demo_reset_desc">Clears task progress, dose logs, vital check-ins, alerts, messages, conflicts, and local attachments.</string>
+    <string name="action_reset_demo">Reset Demo</string>
+    <string name="unit_celsius">Temperature: °C</string>
+    <string name="unit_fahrenheit">Temperature: °F</string>
+    <string name="demo_latency_format">Simulated latency: %1$d ms</string>
+    <string name="demo_notifications_title">In-App Notification Center</string>
+    <string name="demo_push_reminder">Trigger Demo Reminder</string>
+    <string name="pref_quiet_hours">Quiet hours (22:00–07:00)</string>
+    <string name="pref_caregiver_alerts">Share alert escalations with caregiver</string>
+    <string name="about_section_title">About &amp; Live Presentation Script</string>
+    <string name="about_presentation_script_title">5–7 Minute Clinical Coordination Walkthrough</string>
+    <string name="about_presentation_script_body">1. Patient: open Heart Failure episode, confirm morning meds, and submit elevated BP (172/104 mmHg).\n2. Family: review triggered alert guidance and escalate on behalf of the patient.\n3. Nurse: triage queue, send vitals recheck + clinical note, and escalate to Physician.\n4. Physician: inspect clinical sheet, amend Care Plan with evening weight check, and sign off v2.\n5. EHR Sync: toggle HTTP 409 Conflict, push observations, reconcile conflict, and sync.\n6. Language: switch EN → pt-BR / es / fr live without leaving the episode.</string>
+    <string name="about_jump_hf_case">Jump to Heart Failure Case</string>
 </resources>

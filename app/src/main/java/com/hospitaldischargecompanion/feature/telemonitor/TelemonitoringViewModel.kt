@@ -66,15 +66,16 @@ class TelemonitoringViewModel @Inject constructor(
     private val idGenerator: IdGenerator
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.Telemonitoring>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Telemonitoring>().episodeId }.getOrDefault("ep-hf-001")
     private val _draft = MutableStateFlow(CheckInFormDraft())
     private val _feedback = MutableStateFlow(Triple<List<ClinicalAlert>, Boolean, String?>(emptyList(), false, null))
 
     val uiState: StateFlow<TelemonitoringUiState> = combine(
-        episodeRepository.observeEpisode(route.episodeId),
+        episodeRepository.observeEpisode(episodeId),
         sessionRepository.sessionState,
-        telemonitoringRepository.observeBaseline(route.episodeId),
-        telemonitoringRepository.observeCheckIns(route.episodeId),
+        telemonitoringRepository.observeBaseline(episodeId),
+        telemonitoringRepository.observeCheckIns(episodeId),
         combine(telemonitoringRepository.observeWearables(), _draft, _feedback) { w, d, f -> Triple(w, d, f) }
     ) { episode, session, baseline, checkIns, (wearables, draft, feedback) ->
         TelemonitoringUiState(
@@ -117,7 +118,7 @@ class TelemonitoringViewModel @Inject constructor(
 
     fun submitCheckIn() {
         val state = uiState.value
-        val d = state.draft
+        val d = _draft.value
         val sys = d.systolicInput.toIntOrNull()
         val dia = d.diastolicInput.toIntOrNull()
         val hr = d.heartRateInput.toIntOrNull()
@@ -141,7 +142,7 @@ class TelemonitoringViewModel @Inject constructor(
         viewModelScope.launch {
             val result = telemonitoringRepository.submitCheckIn(
                 NewCheckInRequest(
-                    episodeId = route.episodeId,
+                    episodeId = episodeId,
                     systolicMmHg = sys,
                     diastolicMmHg = dia,
                     heartRateBpm = hr,

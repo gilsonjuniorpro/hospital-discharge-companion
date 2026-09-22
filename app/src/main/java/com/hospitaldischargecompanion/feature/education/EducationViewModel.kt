@@ -34,13 +34,14 @@ class EducationViewModel @Inject constructor(
     private val educationRepository: EducationRepository
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.Education>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Education>().episodeId }.getOrDefault("ep-hf-001")
     private val _showClinical = MutableStateFlow(false)
     private val _quizFeedback = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<EducationUiState> = combine(
         sessionRepository.sessionState,
-        educationRepository.observeModules(route.episodeId),
+        educationRepository.observeModules(episodeId),
         _showClinical,
         _quizFeedback
     ) { session, modules, showClinical, feedback ->

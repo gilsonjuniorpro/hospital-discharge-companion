@@ -38,19 +38,22 @@ class AlertsViewModel @Inject constructor(
     private val alertRepository: AlertRepository
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.Alerts>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Alerts>().episodeId }.getOrDefault("ep-hf-001")
+    private val highlightAlertId: String? = savedStateHandle.get<String>("highlightAlertId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Alerts>().highlightAlertId }.getOrNull()
     private val _error = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<AlertsUiState> = combine(
-        episodeRepository.observeEpisode(route.episodeId),
+        episodeRepository.observeEpisode(episodeId),
         sessionRepository.sessionState,
-        alertRepository.observeEpisodeAlerts(route.episodeId),
+        alertRepository.observeEpisodeAlerts(episodeId),
         _error
     ) { episode, session, alerts, error ->
         AlertsUiState(
             episode = episode,
             activeRole = session.activeRole ?: UserRole.PATIENT,
-            highlightAlertId = route.highlightAlertId,
+            highlightAlertId = highlightAlertId,
             alerts = alerts,
             errorMessage = error,
             isLoading = false

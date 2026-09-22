@@ -42,15 +42,16 @@ class EhrSyncViewModel @Inject constructor(
     private val networkSimulator: DemoNetworkSimulator
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.EhrSync>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.EhrSync>().episodeId }.getOrDefault("ep-hf-001")
     private val _busy = MutableStateFlow(false)
     private val _feedback = MutableStateFlow<Pair<String?, String?>>(null to null)
 
     val uiState: StateFlow<EhrSyncUiState> = combine(
-        episodeRepository.observeEpisode(route.episodeId),
+        episodeRepository.observeEpisode(episodeId),
         networkSimulator.config,
-        ehrSyncRepository.observeLogs(route.episodeId),
-        ehrSyncRepository.observeOpenConflicts(route.episodeId),
+        ehrSyncRepository.observeLogs(episodeId),
+        ehrSyncRepository.observeOpenConflicts(episodeId),
         combine(_busy, _feedback) { b, f -> b to f }
     ) { episode, config, logs, conflicts, (busy, feedback) ->
         EhrSyncUiState(
@@ -73,11 +74,11 @@ class EhrSyncViewModel @Inject constructor(
     }
 
     fun pullDischargeSummary() {
-        runSync { ehrSyncRepository.pullDischargeSummary(route.episodeId) }
+        runSync { ehrSyncRepository.pullDischargeSummary(episodeId) }
     }
 
     fun pushObservations() {
-        runSync { ehrSyncRepository.pushObservationsAndAdherence(route.episodeId) }
+        runSync { ehrSyncRepository.pushObservationsAndAdherence(episodeId) }
     }
 
     fun resolveConflict(conflictId: String, choice: ConflictResolutionChoice) {

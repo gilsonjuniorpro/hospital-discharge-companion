@@ -43,14 +43,15 @@ class MessagingViewModel @Inject constructor(
     private val messagingRepository: MessagingRepository
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.Messaging>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Messaging>().episodeId }.getOrDefault("ep-hf-001")
     private val _error = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<MessagingUiState> = combine(
-        episodeRepository.observeEpisode(route.episodeId),
+        episodeRepository.observeEpisode(episodeId),
         sessionRepository.sessionState,
-        messagingRepository.observeThread(route.episodeId),
-        alertRepository.observeEpisodeAlerts(route.episodeId),
+        messagingRepository.observeThread(episodeId),
+        alertRepository.observeEpisodeAlerts(episodeId),
         _error
     ) { episode, session, messages, alerts, error ->
         val role = session.activeRole ?: UserRole.PATIENT
@@ -80,7 +81,7 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch {
             when (
                 val res = messagingRepository.sendMessage(
-                    episodeId = route.episodeId,
+                    episodeId = episodeId,
                     senderName = sender,
                     senderRole = state.activeRole,
                     body = body,

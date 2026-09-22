@@ -38,13 +38,14 @@ class AppointmentsViewModel @Inject constructor(
     private val appointmentRepository: AppointmentRepository
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.Appointments>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Appointments>().episodeId }.getOrDefault("ep-hf-001")
     private val _feedback = MutableStateFlow<Pair<String?, String?>>(null to null)
 
     val uiState: StateFlow<AppointmentsUiState> = combine(
-        episodeRepository.observeEpisode(route.episodeId),
+        episodeRepository.observeEpisode(episodeId),
         sessionRepository.sessionState,
-        appointmentRepository.observeAppointments(route.episodeId),
+        appointmentRepository.observeAppointments(episodeId),
         _feedback
     ) { episode, session, appointments, (banner, error) ->
         AppointmentsUiState(

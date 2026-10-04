@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,8 +37,19 @@ import com.hospitaldischargecompanion.feature.telemonitor.TelemonitoringScreen
 
 @Composable
 fun HdcNavHost(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    pendingDeepLink: HdcRoute? = null,
+    onDeepLinkConsumed: () -> Unit = {}
 ) {
+    LaunchedEffect(pendingDeepLink) {
+        if (pendingDeepLink != null) {
+            navController.navigate(pendingDeepLink) {
+                launchSingleTop = true
+            }
+            onDeepLinkConsumed()
+        }
+    }
+
     val navigateToProfile: () -> Unit = {
         navController.navigate(HdcRoute.ProfileSelection) {
             popUpTo(0) { inclusive = true }
@@ -136,19 +148,8 @@ fun HdcNavHost(
             DemoControlsScreen(
                 onBack = { navController.popBackStack() },
                 onOpenDeepLink = { uri ->
-                    when {
-                        uri.startsWith("hdc://dose/") -> {
-                            val medId = uri.removePrefix("hdc://dose/")
-                            navController.navigate(HdcRoute.Medications("ep-hf-001", medId))
-                        }
-                        uri.startsWith("hdc://alert/") -> {
-                            val alertId = uri.removePrefix("hdc://alert/")
-                            navController.navigate(HdcRoute.Alerts("ep-hf-001", alertId))
-                        }
-                        uri.startsWith("hdc://episode/") -> {
-                            val epId = uri.removePrefix("hdc://episode/")
-                            navController.navigate(HdcRoute.PatientHome(epId))
-                        }
+                    DeepLinkParser.parse(uri)?.let { route ->
+                        navController.navigate(route)
                     }
                 }
             )

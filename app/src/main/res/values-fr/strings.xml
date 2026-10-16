@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hospital Discharge Companion</string>
+    <string name="app_tagline">Suivi post-hospitalisation coordonné entre patient, proche aidant, infirmier et médecin</string>
+    <string name="profile_subtitle">Un épisode de sortie, quatre rôles cliniques coordonnés</string>
+    <string name="disclaimer_short">Démo éducative uniquement. Pas un dispositif médical ni un outil clinique réel.</string>
+    <string name="disclaimer_banner">Démo éducative uniquement — pas un dispositif médical, non destiné aux soins réels et aucun appel d\'urgence réel.</string>
+    <string name="offline_mode_badge">Backend simulé hors ligne</string>
+    <string name="phi_badge_label">PHI Simulé</string>
+    <string name="phi_badge_a11y">Bannière éducative de données de santé protégées simulées</string>
+
+    <string name="section_language">Langue</string>
+    <string name="section_seeded_episode">Épisode de Sortie Actif</string>
+    <string name="section_choose_role">Choisir un Profil d\'Expérience</string>
+    <string name="episode_day_unit_format">Jour %1$d post-sortie · %2$s</string>
+
+    <string name="locale_en">English</string>
+    <string name="locale_pt_br">Português (BR)</string>
+    <string name="locale_es">Español</string>
+    <string name="locale_fr">Français</string>
+
+    <string name="role_patient_title">Patient</string>
+    <string name="role_patient_desc">Suivez votre plan de sortie, confirmez vos traitements, saisissez vos constantes et écrivez à l\'équipe.</string>
+    <string name="role_family_title">Proche Aidant</string>
+    <string name="role_family_desc">Aidez pour les prises et bilans, suivez les alertes partagées et escaladez au nom du patient.</string>
+    <string name="role_nurse_title">Infirmier / Infirmière</string>
+    <string name="role_nurse_desc">Triez la file de télésurveillance, vérifiez l\'observance, envoyez des rappels et escaladez les alertes.</string>
+    <string name="role_physician_title">Médecin</string>
+    <string name="role_physician_desc">Examinez les alertes escaladées, modifiez le plan de soins avec signature versionnée et documentez l\'orientation.</string>
+    <string name="role_last_used">Dernier actif</string>
+
+    <string name="risk_low">Risque Faible</string>
+    <string name="risk_medium">Risque Modéré</string>
+    <string name="risk_high">Risque Élevé</string>
+
+    <string name="ehr_status_synced">DPI Synchronisé</string>
+    <string name="ehr_status_pending">DPI En Attente</string>
+    <string name="ehr_status_conflict">Conflit DPI</string>
+    <string name="ehr_status_failed">Échec DPI</string>
+
+    <string name="red_flag_card_title">Signaux d\'Alerte pour Escalader ou Consulter</string>
+    <string name="red_flag_copy_disclaimer">Consignes éducatives uniquement. Cette démo ne passe jamais d\'appel d\'urgence.</string>
+
+    <string name="action_retry">Réessayer</string>
+    <string name="action_demo_controls">Contrôles Démo &amp; À Propos</string>
+    <string name="action_switch_role">Changer de Rôle</string>
+    <string name="action_back">Retour</string>
+
+    <string name="patient_home_title">Suivi Patient</string>
+    <string name="empty_episode_title">Aucun Épisode de Sortie Trouvé</string>
+    <string name="empty_episode_subtitle">Réinitialisez la démo ou choisissez un cas préchargé dans la sélection de profil.</string>
+    <string name="discharge_snapshot_meta">Sortie %1$s · %2$s · Plan v%3$d</string>
+    <string name="discharge_care_team_format">Médecin : %1$s · Infirmier : %2$s</string>
+    <string name="care_circle_code_format">Code Cercle Familial : %1$s</string>
+    <string name="patient_active_alerts_banner">%1$d Alerte(s) Clinique(s) Active(s)</string>
+    <string name="metric_med_adherence">Observance Médicamenteuse</string>
+    <string name="metric_med_count_format">%1$d sur %2$d prises actives</string>
+    <string name="metric_care_tasks">Tâches du Plan</string>
+    <string name="metric_due_tasks_format">%1$d dues ou en retard</string>
+    <string name="latest_vitals_title">Dernier Relevé de Télésurveillance</string>
+    <string name="latest_vitals_line">TA %1$d/%2$d mmHg · FC %3$d bpm · SpO2 %4$d%% · %5$.1f kg</string>
+    <string name="logged_by_format">Saisi par %1$s</string>
+    <string name="section_care_modules">Modules de Soins</string>
+
+    <string name="nav_care_plan">Plan de Soins</string>
+    <string name="nav_medications">Médicaments</string>
+    <string name="nav_telemonitoring">Constantes</string>
+    <string name="nav_alerts">Alertes</string>
+    <string name="nav_messaging">Messagerie Équipe</string>
+    <string name="nav_appointments">Rendez-vous</string>
+    <string name="nav_education">Éducation</string>
+    <string name="nav_ehr_sync">Synchro DPI</string>
+
+    <string name="care_plan_revision_badge">Plan de Soins Révision v%1$d</string>
+    <string name="care_plan_history_title">Historique des Révisions</string>
+    <string name="care_plan_export_title">Résumé Exporté du Plan</string>
+    <string name="care_plan_day_header">Jour %1$d Post-Sortie</string>
+    <string name="care_plan_empty_title">Aucune Tâche Prévue</string>
+    <string name="care_plan_empty_subtitle">Aucune tâche post-sortie trouvée pour cet épisode.</string>
+    <string name="care_plan_skip_dialog_title">Ignorer la Tâche avec Motif</string>
+    <string name="care_plan_skip_reason_hint">Motif (ex. : vertiges, rupture de stock)</string>
+    <string name="care_plan_skip_reason_format">Motif d\'omission : %1$s</string>
+    <string name="action_complete">Terminer</string>
+    <string name="action_skip">Ignorer</string>
+    <string name="action_reopen">Rouvrir</string>
+    <string name="action_cancel">Annuler</string>
+    <string name="action_close">Fermer</string>
+
+    <string name="med_adherence_banner_format">Observance %1$d%% (%2$d/%3$d prises)</string>
+    <string name="med_warnings_header">Alertes d\'Interactions et Sécurité</string>
+    <string name="med_list_header">Traitements de Sortie</string>
+    <string name="med_history_header">Journal Récent des Prises</string>
+    <string name="med_food_format">Alimentation : %1$s</string>
+    <string name="med_allergen_format">Sécurité / Allergène : %1$s</string>
+    <string name="med_supply_format">Stock estimé : %1$d jours</string>
+    <string name="med_refill_action">Demander Renouvellement</string>
+    <string name="med_out_of_stock_action">Rupture · Résoudre</string>
+    <string name="med_last_action_format">%1$s · %2$s</string>
+    <string name="med_pillbox_attached">Photo simulée du pilulier jointe</string>
+    <string name="med_attach_pillbox">Joindre photo simulée du pilulier</string>
+    <string name="action_take">Pris</string>
+    <string name="action_snooze">Reporter</string>
+
+    <string name="vitals_alert_fired_title">%1$d Alerte(s) Clinique(s) Déclenchée(s)</string>
+    <string name="vitals_saved_banner">Bilan enregistré et mis en file pour synchro DPI.</string>
+    <string name="vitals_baseline_title">Aujourd\'hui vs. Référence Sortie</string>
+    <string name="vitals_baseline_summary">Poids sec de référence : %1$.1f kg · Dernier : %2$.1f kg (%3$+.1f kg)</string>
+    <string name="vitals_chart_legend">Bleu-vert : TA Systolique (mmHg) · Corail : Poids (kg)</string>
+    <string name="vitals_checkin_form_title">Saisir Symptômes et Constantes</string>
+    <string name="vitals_demo_abnormal_preset">Simuler TA Élevée</string>
+    <string name="vital_systolic_label">Systolique (mmHg)</string>
+    <string name="vital_diastolic_label">Diastolique (mmHg)</string>
+    <string name="vital_hr_label">Pouls (bpm)</string>
+    <string name="vital_spo2_label">SpO2 (%)</string>
+    <string name="vital_weight_label">Poids (kg)</string>
+    <string name="vital_temp_c_label">Temp (°C)</string>
+    <string name="vital_dyspnea_slider">Essoufflement : %1$d / 5</string>
+    <string name="vital_pain_slider">Douleur : %1$d / 10</string>
+    <string name="vital_notes_hint">Notes symptômes (ex. : œdème des chevilles, vertiges)</string>
+    <string name="action_submit_checkin">Enregistrer le Bilan</string>
+    <string name="wearables_section_title">Objets Connectés (Stub Phase 2)</string>
+    <string name="action_sync_wearable_stub">Simuler Synchro BLE</string>
+    <string name="vitals_history_title">Historique des Relevés</string>
+    <string name="vital_flag_abnormal">Hors Norme</string>
+
+    <string name="alerts_empty_title">Situation Stable</string>
+    <string name="alerts_empty_subtitle">Aucune alerte clinique ouverte pour cet épisode.</string>
+    <string name="alert_guidance_format">Conduite : %1$s</string>
+    <string name="alert_audit_trail_title">Journal d\'Audit</string>
+    <string name="action_acknowledge">Acquitter</string>
+    <string name="action_escalate">Escalader</string>
+    <string name="action_resolve">Résoudre</string>
+
+    <string name="family_home_title">Espace Proche Aidant</string>
+    <string name="family_caring_for_format">Accompagnement de %1$s</string>
+    <string name="family_dual_attribution_note">Les actions saisies ici enregistrent automatiquement la double attribution aidant/patient.</string>
+    <string name="family_assist_meds">Aider Traitements</string>
+    <string name="family_log_vitals">Saisir Constantes</string>
+    <string name="family_escalate_nurse">Escalader Infirmier</string>
+    <string name="family_shared_alerts">Alertes Partagées</string>
+    <string name="family_pending_tasks">Tâches du Jour</string>
+    <string name="family_care_circle_title">Cercle de Soins</string>
+    <string name="family_permission_format">Autorisation : %1$s</string>
+    <string name="family_change_permission">Changer Autorisation</string>
+    <string name="family_join_by_code_title">Accepter un Code d\'Invitation</string>
+    <string name="family_invite_code_hint">Code démo (ex. : HDC-HF-402)</string>
+    <string name="family_caregiver_name_hint">Nom complet du proche aidant</string>
+    <string name="action_join_care_circle">Rejoindre le Cercle</string>
+    <string name="action_view_all">Tout Voir</string>
+    <string name="action_confirm">Confirmer</string>
+    <string name="action_revoke">Révoquer</string>
+
+    <string name="nurse_workstation_title">Tri Infirmier</string>
+    <string name="nurse_workstation_subtitle">File de télésurveillance et recensement des sorties</string>
+    <string name="nurse_handoff_title">Synthèse de Relève</string>
+    <string name="nurse_bulk_remind">Envoyer Rappels Groupés</string>
+    <string name="nurse_triage_queue_title">File d\'Alertes (%1$d)</string>
+    <string name="nurse_escalate_md">Escalader Médecin</string>
+    <string name="nurse_census_title">Épisodes Actifs</string>
+    <string name="nurse_census_metrics">Observance %1$d%% · %2$d alerte(s) · %3$d en retard</string>
+    <string name="nurse_request_recheck_note">Recontrôle + Note</string>
+    <string name="filter_all">Tous</string>
+    <string name="filter_high_risk">Risque Élevé</string>
+    <string name="filter_overdue">En Retard</string>
+    <string name="filter_open_alerts">Alertes Ouvertes</string>
+
+    <string name="physician_workstation_title">Escalades Médicales</string>
+    <string name="physician_workstation_subtitle">Revue haut risque, signature du plan et orientation</string>
+    <string name="physician_escalated_queue_title">File Escaladée (%1$d)</string>
+    <string name="physician_queue_empty_title">Aucune Alerte Escaladée</string>
+    <string name="physician_queue_empty_subtitle">La file médicale filtrée est actuellement vide.</string>
+    <string name="physician_open_sheet">Ouvrir Fiche</string>
+    <string name="physician_clinical_sheet_title">Fiche Clinique</string>
+    <string name="physician_med_count_format">Traitements actifs : %1$d · Orientation : %2$s</string>
+    <string name="physician_inspect_care_plan">Voir le Plan Complet</string>
+    <string name="physician_amend_title">Modifier le Plan de Soins et Signer</string>
+    <string name="disposition_continue_home">Maintenir Domicile</string>
+    <string name="disposition_earlier_followup">Avancer Suivi</string>
+    <string name="disposition_advise_er">Orienter Urgences (Texte)</string>
+    <string name="physician_amend_summary_hint">Motif de l\'amendement</string>
+    <string name="physician_amend_task_hint">Titre de la nouvelle tâche</string>
+    <string name="physician_amend_redflag_hint">Signal d\'alerte supplémentaire (optionnel)</string>
+    <string name="physician_sign_off_action">Signer la Nouvelle Révision du Plan</string>
+
+    <string name="messaging_urgent_alert_banner">Une alerte clinique urgente ou critique est ouverte sur cet épisode.</string>
+    <string name="messaging_clinical_note_badge">Note Clinique</string>
+    <string name="messaging_read_receipt_seen">Lu par l\'équipe soignante (démo)</string>
+    <string name="messaging_read_receipt_delivered">Transmis à l\'équipe soignante</string>
+    <string name="messaging_mark_clinical_note">Marquer comme note clinique</string>
+    <string name="messaging_input_hint">Écrire un message à l\'équipe</string>
+    <string name="action_send">Envoyer</string>
+
+    <string name="appointment_requested_slot_format">Créneau demandé pour report : %1$s</string>
+    <string name="action_mark_attended">Effectué</string>
+    <string name="action_mark_missed">Manqué</string>
+    <string name="action_reschedule">Reporter</string>
+    <string name="action_approve_reschedule">Approuver</string>
+
+    <string name="education_clinical_detail_toggle">Afficher le Détail Clinique</string>
+    <string name="education_read_time_format">%1$d min de lecture</string>
+    <string name="education_clinician_detail_header">Référence Clinique Détaillée</string>
+    <string name="education_teachback_header">Vérification de Compréhension</string>
+    <string name="action_mark_completed">Marquer Terminé</string>
+
+    <string name="ehr_fhir_resources_note">Contrats FHIR simulés : Patient, Encounter, MedicationRequest, Observation, CarePlan, Appointment, Communication.</string>
+    <string name="ehr_last_sync_format">Dernière synchro : %1$s</string>
+    <string name="ehr_push_outbound">Envoyer Constantes et Observance</string>
+    <string name="ehr_pull_summary">Importer Résumé</string>
+    <string name="ehr_simulator_title">Simulateur Réseau et Erreurs DPI</string>
+    <string name="sim_mode_ok">Normal (200)</string>
+    <string name="sim_mode_409">Conflit (409)</string>
+    <string name="sim_mode_401">Non autorisé (401)</string>
+    <string name="sim_mode_timeout">Délai expiré</string>
+    <string name="sim_mode_offline">Hors ligne</string>
+    <string name="ehr_conflicts_title">Conflits d\'Observation Ouverts</string>
+    <string name="ehr_keep_local">Conserver Données Locales</string>
+    <string name="ehr_accept_upstream">Accepter Version DPI</string>
+    <string name="ehr_sync_log_title">Journal de Synchronisation DPI</string>
+
+    <string name="demo_reset_title">Réinitialiser les Données de Démo</string>
+    <string name="demo_reset_desc">Efface la progression, les prises, les constantes, les alertes, les messages, les conflits et les pièces jointes.</string>
+    <string name="action_reset_demo">Réinitialiser Démo</string>
+    <string name="unit_celsius">Température : °C</string>
+    <string name="unit_fahrenheit">Température : °F</string>
+    <string name="demo_latency_format">Latence simulée : %1$d ms</string>
+    <string name="demo_notifications_title">Centre de Notifications Intégré</string>
+    <string name="demo_push_reminder">Déclencher Rappel Démo</string>
+    <string name="pref_quiet_hours">Heures silencieuses (22h00–07h00)</string>
+    <string name="pref_caregiver_alerts">Partager les escalades avec l\'aidant</string>
+    <string name="about_section_title">À Propos &amp; Scénario de Présentation</string>
+    <string name="about_presentation_script_title">Parcours de Démonstration Clinique (5–7 min)</string>
+    <string name="about_presentation_script_body">1. Patient : ouvrez le cas Insuffisance Cardiaque, confirmez les médicaments du matin et saisissez une TA élevée (172/104 mmHg).\n2. Proche aidant : consultez les consignes de l\'alerte et escaladez au nom du patient.\n3. Infirmier : triez la file, demandez un recontrôle + note clinique et escaladez au Médecin.\n4. Médecin : consultez la fiche clinique, ajoutez une pesée du soir et signez le plan v2.\n5. Synchro DPI : activez le Conflit HTTP 409, envoyez les constantes, résolvez le conflit et synchronisez.\n6. Langue : basculez EN → pt-BR / es / fr sans quitter l\'épisode.</string>
+    <string name="about_jump_hf_case">Ouvrir le Cas Insuffisance Cardiaque</string>
+</resources>

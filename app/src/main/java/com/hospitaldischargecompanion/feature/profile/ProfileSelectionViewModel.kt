@@ -7,6 +7,7 @@ import com.hospitaldischargecompanion.core.demo.DemoSessionRepository
 import com.hospitaldischargecompanion.core.demo.UserRole
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisode
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisodeRepository
+import com.hospitaldischargecompanion.core.i18n.LocalizedClinicalPack
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -37,7 +38,7 @@ class ProfileSelectionViewModel @Inject constructor(
             lastRole = session.activeRole,
             selectedEpisodeId = session.selectedEpisodeId,
             selectedLocale = session.locale,
-            episodes = episodes,
+            episodes = episodes.map { LocalizedClinicalPack.applyTo(it, session.locale) },
             isLoading = false
         )
     }.stateIn(

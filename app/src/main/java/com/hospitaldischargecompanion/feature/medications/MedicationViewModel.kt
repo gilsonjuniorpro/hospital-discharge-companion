@@ -14,6 +14,7 @@ import com.hospitaldischargecompanion.core.discharge.DischargeEpisodeRepository
 import com.hospitaldischargecompanion.core.medication.AdherenceSummary
 import com.hospitaldischargecompanion.core.medication.DoseActionType
 import com.hospitaldischargecompanion.core.medication.DoseLogEntry
+import com.hospitaldischargecompanion.core.medication.MedicationChangeStatus
 import com.hospitaldischargecompanion.core.medication.MedicationInteractionWarning
 import com.hospitaldischargecompanion.core.medication.MedicationItem
 import com.hospitaldischargecompanion.core.medication.MedicationRepository
@@ -27,10 +28,19 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+data class MedicationReconciliationCounts(
+    val newCount: Int = 0,
+    val changedCount: Int = 0,
+    val continuedCount: Int = 0,
+    val stoppedCount: Int = 0
+)
+
 data class MedicationUiState(
     val episode: DischargeEpisode? = null,
     val activeRole: UserRole = UserRole.PATIENT,
     val highlightMedicationId: String? = null,
+    val selectedFilter: MedicationChangeStatus? = null,
+    val reconciliationCounts: MedicationReconciliationCounts = MedicationReconciliationCounts(),
     val medications: List<MedicationItem> = emptyList(),
     val warnings: List<MedicationInteractionWarning> = emptyList(),
     val adherence: AdherenceSummary = AdherenceSummary(0, 0, 0, 0, 100),
@@ -53,6 +63,7 @@ class MedicationViewModel @Inject constructor(
         ?: runCatching { savedStateHandle.toRoute<HdcRoute.Medications>().episodeId }.getOrDefault("ep-hf-001")
     private val highlightMedicationId: String? = savedStateHandle.get<String>("highlightMedicationId")
         ?: runCatching { savedStateHandle.toRoute<HdcRoute.Medications>().highlightMedicationId }.getOrNull()
+    private val _selectedFilter = MutableStateFlow<MedicationChangeStatus?>(null)
     private val _errorMessage = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<MedicationUiState> = combine(
@@ -63,18 +74,28 @@ class MedicationViewModel @Inject constructor(
         combine(
             medicationRepository.observeAdherence(episodeId),
             medicationRepository.observeDoseLogs(episodeId),
+            _selectedFilter,
             _errorMessage
-        ) { adh, logs, err -> Triple(adh, logs, err) }
-    ) { episode, session, meds, warnings, (adherence, logs, error) ->
+        ) { adh, logs, filter, err -> QuadState(adh, logs, filter, err) }
+    ) { episode, session, meds, warnings, extra ->
+        val counts = MedicationReconciliationCounts(
+            newCount = meds.count { it.changeStatus == MedicationChangeStatus.NEW },
+            changedCount = meds.count { it.changeStatus == MedicationChangeStatus.CHANGED },
+            continuedCount = meds.count { it.changeStatus == MedicationChangeStatus.CONTINUED },
+            stoppedCount = meds.count { it.changeStatus == MedicationChangeStatus.STOPPED }
+        )
+        val filteredMeds = extra.filter?.let { f -> meds.filter { it.changeStatus == f } } ?: meds
         MedicationUiState(
             episode = episode,
             activeRole = session.activeRole ?: UserRole.PATIENT,
             highlightMedicationId = highlightMedicationId,
-            medications = meds,
+            selectedFilter = extra.filter,
+            reconciliationCounts = counts,
+            medications = filteredMeds,
             warnings = warnings,
-            adherence = adherence,
-            doseLogs = logs,
-            errorMessage = error,
+            adherence = extra.adherence,
+            doseLogs = extra.logs,
+            errorMessage = extra.error,
             isLoading = false
         )
     }.stateIn(
@@ -82,6 +103,17 @@ class MedicationViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = MedicationUiState()
     )
+
+    private data class QuadState(
+        val adherence: AdherenceSummary,
+        val logs: List<DoseLogEntry>,
+        val filter: MedicationChangeStatus?,
+        val error: String?
+    )
+
+    fun selectFilter(filter: MedicationChangeStatus?) {
+        _selectedFilter.value = filter
+    }
 
     fun recordDose(med: MedicationItem, action: DoseActionType, reason: String? = null) {
         val state = uiState.value

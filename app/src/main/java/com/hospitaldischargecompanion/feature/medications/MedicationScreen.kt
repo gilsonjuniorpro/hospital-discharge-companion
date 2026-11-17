@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -18,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -133,6 +135,34 @@ fun MedicationScreen(
 
             item {
                 SectionHeader(title = stringResource(R.string.med_list_header))
+                Text(
+                    text = stringResource(
+                        R.string.med_reconciliation_summary,
+                        state.reconciliationCounts.newCount,
+                        state.reconciliationCounts.changedCount,
+                        state.reconciliationCounts.continuedCount,
+                        state.reconciliationCounts.stoppedCount
+                    ),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 4.dp, bottom = 6.dp)
+                )
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    val filters = listOf(
+                        null to R.string.filter_all,
+                        MedicationChangeStatus.NEW to R.string.med_filter_new,
+                        MedicationChangeStatus.CHANGED to R.string.med_filter_changed,
+                        MedicationChangeStatus.CONTINUED to R.string.med_filter_continued,
+                        MedicationChangeStatus.STOPPED to R.string.med_filter_stopped
+                    )
+                    items(filters) { (status, labelRes) ->
+                        FilterChip(
+                            selected = state.selectedFilter == status,
+                            onClick = { viewModel.selectFilter(status) },
+                            label = { Text(text = stringResource(labelRes)) }
+                        )
+                    }
+                }
             }
 
             items(state.medications, key = { it.id }) { med ->

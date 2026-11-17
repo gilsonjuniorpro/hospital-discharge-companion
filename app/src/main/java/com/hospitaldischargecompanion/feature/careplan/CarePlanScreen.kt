@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,8 +21,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -119,6 +122,48 @@ fun CarePlanScreen(
             state.errorMessage?.let { error ->
                 item {
                     ErrorRetryCard(message = error, onRetry = { viewModel.dismissError() })
+                }
+            }
+
+            item {
+                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = stringResource(
+                                R.string.care_plan_progress_format,
+                                state.completedCount,
+                                state.totalCount,
+                                state.completionPercent
+                            ),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        LinearProgressIndicator(
+                            progress = { (state.completionPercent / 100f).coerceIn(0f, 1f) },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            val chips = listOf(
+                                null to R.string.filter_all,
+                                CarePlanTaskStatus.DUE to R.string.filter_due,
+                                CarePlanTaskStatus.OVERDUE to R.string.filter_overdue,
+                                CarePlanTaskStatus.COMPLETED to R.string.filter_completed,
+                                CarePlanTaskStatus.SKIPPED to R.string.filter_skipped
+                            )
+                            items(chips) { (status, res) ->
+                                FilterChip(
+                                    selected = state.selectedStatusFilter == status,
+                                    onClick = { viewModel.selectStatusFilter(status) },
+                                    label = { Text(text = stringResource(res)) }
+                                )
+                            }
+                        }
+                    }
                 }
             }
 

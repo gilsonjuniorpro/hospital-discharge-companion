@@ -116,9 +116,9 @@ class CarePlanViewModel @Inject constructor(
         }
     }
 
-    fun reopenTask(taskId: String) {
+    fun reopenTask(taskId: String, reassignTo: String? = null) {
         viewModelScope.launch {
-            when (val result = carePlanRepository.reopenTask(taskId, uiState.value.activeRole)) {
+            when (val result = carePlanRepository.reopenTask(taskId, uiState.value.activeRole, reassignTo)) {
                 is DomainResult.Success -> _errorMessage.value = null
                 is DomainResult.Failure -> _errorMessage.value = result.error.detail
             }

@@ -237,4 +237,10 @@
     <string name="med_filter_changed">Cambiados</string>
     <string name="med_filter_continued">Continuados</string>
     <string name="med_filter_stopped">Suspendidos</string>
+
+    <string name="med_skip_dialog_title">¿Por qué se omitió esta dosis?</string>
+    <string name="med_skip_reason_dizziness">Mareo / aturdimiento</string>
+    <string name="med_skip_reason_nausea">Náuseas / malestar estomacal</string>
+    <string name="med_skip_reason_supply">Sin suministro</string>
+    <string name="med_skip_reason_custom_hint">Nota adicional (opcional)</string>
 </resources>

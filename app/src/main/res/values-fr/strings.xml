@@ -237,4 +237,10 @@
     <string name="med_filter_changed">Modifiés</string>
     <string name="med_filter_continued">Poursuivis</string>
     <string name="med_filter_stopped">Arrêtés</string>
+
+    <string name="med_skip_dialog_title">Pourquoi cette prise a-t-elle été ignorée ?</string>
+    <string name="med_skip_reason_dizziness">Vertiges / étourdissements</string>
+    <string name="med_skip_reason_nausea">Nausées / maux d\'estomac</string>
+    <string name="med_skip_reason_supply">Rupture de stock</string>
+    <string name="med_skip_reason_custom_hint">Note complémentaire (optionnel)</string>
 </resources>

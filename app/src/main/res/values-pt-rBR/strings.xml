@@ -254,4 +254,8 @@
     <string name="assignee_patient">Paciente</string>
     <string name="assignee_caregiver">Cuidador Familiar</string>
     <string name="assignee_home_nurse">Enfermagem Domiciliar</string>
+
+    <string name="vital_temp_f_label">Temp (°F)</string>
+    <string name="vital_bp_category_format">Classificação da PA: %1$s</string>
+    <string name="vitals_demo_normal_preset">Valores Normais</string>
 </resources>

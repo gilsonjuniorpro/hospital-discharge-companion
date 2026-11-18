@@ -258,4 +258,12 @@
     <string name="vital_temp_f_label">Temp (°F)</string>
     <string name="vital_bp_category_format">Classificação da PA: %1$s</string>
     <string name="vitals_demo_normal_preset">Valores Normais</string>
+
+    <string name="filter_active">Ativos</string>
+    <string name="filter_escalated">Escalados</string>
+    <string name="filter_resolved">Resolvidos</string>
+    <string name="ladder_stage_family">Família</string>
+    <string name="ladder_stage_nurse">Enferm.</string>
+    <string name="ladder_stage_physician">Médico</string>
+    <string name="ladder_stage_er">Orientar PS</string>
 </resources>

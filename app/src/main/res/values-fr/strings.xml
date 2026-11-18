@@ -258,4 +258,12 @@
     <string name="vital_temp_f_label">Temp (°F)</string>
     <string name="vital_bp_category_format">Classification TA : %1$s</string>
     <string name="vitals_demo_normal_preset">Valeurs Normales</string>
+
+    <string name="filter_active">Actives</string>
+    <string name="filter_escalated">Escaladées</string>
+    <string name="filter_resolved">Résolues</string>
+    <string name="ladder_stage_family">Aidant</string>
+    <string name="ladder_stage_nurse">Infirmier</string>
+    <string name="ladder_stage_physician">Médecin</string>
+    <string name="ladder_stage_er">Urgences</string>
 </resources>

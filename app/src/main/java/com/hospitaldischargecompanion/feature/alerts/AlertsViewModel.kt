@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.hospitaldischargecompanion.core.alerts.AlertRepository
+import com.hospitaldischargecompanion.core.alerts.AlertStatus
 import com.hospitaldischargecompanion.core.alerts.ClinicalAlert
 import com.hospitaldischargecompanion.core.demo.DemoSessionRepository
 import com.hospitaldischargecompanion.core.demo.DomainResult
@@ -21,10 +22,18 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+enum class AlertListFilter {
+    ALL,
+    ACTIVE,
+    ESCALATED,
+    RESOLVED
+}
+
 data class AlertsUiState(
     val episode: DischargeEpisode? = null,
     val activeRole: UserRole = UserRole.PATIENT,
     val highlightAlertId: String? = null,
+    val selectedFilter: AlertListFilter = AlertListFilter.ALL,
     val alerts: List<ClinicalAlert> = emptyList(),
     val errorMessage: String? = null,
     val isLoading: Boolean = true
@@ -42,19 +51,28 @@ class AlertsViewModel @Inject constructor(
         ?: runCatching { savedStateHandle.toRoute<HdcRoute.Alerts>().episodeId }.getOrDefault("ep-hf-001")
     private val highlightAlertId: String? = savedStateHandle.get<String>("highlightAlertId")
         ?: runCatching { savedStateHandle.toRoute<HdcRoute.Alerts>().highlightAlertId }.getOrNull()
+    private val _selectedFilter = MutableStateFlow(AlertListFilter.ALL)
     private val _error = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<AlertsUiState> = combine(
         episodeRepository.observeEpisode(episodeId),
         sessionRepository.sessionState,
         alertRepository.observeEpisodeAlerts(episodeId),
+        _selectedFilter,
         _error
-    ) { episode, session, alerts, error ->
+    ) { episode, session, alerts, filter, error ->
+        val filtered = when (filter) {
+            AlertListFilter.ALL -> alerts
+            AlertListFilter.ACTIVE -> alerts.filter { it.isActive }
+            AlertListFilter.ESCALATED -> alerts.filter { it.status == AlertStatus.ESCALATED }
+            AlertListFilter.RESOLVED -> alerts.filter { it.status == AlertStatus.RESOLVED }
+        }
         AlertsUiState(
             episode = episode,
             activeRole = session.activeRole ?: UserRole.PATIENT,
             highlightAlertId = highlightAlertId,
-            alerts = alerts,
+            selectedFilter = filter,
+            alerts = filtered,
             errorMessage = error,
             isLoading = false
         )
@@ -63,6 +81,10 @@ class AlertsViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = AlertsUiState()
     )
+
+    fun setFilter(filter: AlertListFilter) {
+        _selectedFilter.value = filter
+    }
 
     private fun actorName(): String {
         val state = uiState.value

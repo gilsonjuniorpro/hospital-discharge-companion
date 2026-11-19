@@ -266,4 +266,9 @@
     <string name="ladder_stage_nurse">Infirmier</string>
     <string name="ladder_stage_physician">Médecin</string>
     <string name="ladder_stage_er">Urgences</string>
+
+    <string name="family_invite_member_action">Inviter un Aidant</string>
+    <string name="family_invite_dialog_title">Inviter un Proche Aidant</string>
+    <string name="family_relationship_hint">Lien (ex. : Fille, Conjoint)</string>
+    <string name="consent_signed_badge">Consentement Vérifié</string>
 </resources>

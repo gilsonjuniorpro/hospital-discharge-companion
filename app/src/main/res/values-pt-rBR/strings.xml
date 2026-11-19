@@ -277,4 +277,7 @@
 
     <string name="nurse_export_handoff">Exportar Plantão</string>
     <string name="nurse_handoff_dialog_title">Relatório de Passagem de Plantão</string>
+
+    <string name="physician_active_meds_header">Resumo de Medicações de Alta</string>
+    <string name="physician_signed_revisions_header">Revisões Assinadas do Plano</string>
 </resources>

@@ -277,4 +277,7 @@
 
     <string name="nurse_export_handoff">Exportar Turno</string>
     <string name="nurse_handoff_dialog_title">Informe de Cambio de Turno</string>
+
+    <string name="physician_active_meds_header">Resumen de Medicamentos al Alta</string>
+    <string name="physician_signed_revisions_header">Revisiones Firmadas del Plan</string>
 </resources>

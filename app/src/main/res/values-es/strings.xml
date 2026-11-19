@@ -274,4 +274,7 @@
 
     <string name="nurse_templates_action">Plantillas Nota</string>
     <string name="nurse_templates_dialog_title">Documentar Nota Clínica de Enfermería</string>
+
+    <string name="nurse_export_handoff">Exportar Turno</string>
+    <string name="nurse_handoff_dialog_title">Informe de Cambio de Turno</string>
 </resources>

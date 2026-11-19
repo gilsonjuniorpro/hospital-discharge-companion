@@ -274,4 +274,7 @@
 
     <string name="nurse_templates_action">Note Templates</string>
     <string name="nurse_templates_dialog_title">Document Nursing Clinical Note</string>
+
+    <string name="nurse_export_handoff">Export Handoff</string>
+    <string name="nurse_handoff_dialog_title">Nursing Shift Handoff Report</string>
 </resources>

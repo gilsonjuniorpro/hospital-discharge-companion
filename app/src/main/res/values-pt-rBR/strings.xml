@@ -274,4 +274,7 @@
 
     <string name="nurse_templates_action">Modelos de Nota</string>
     <string name="nurse_templates_dialog_title">Registrar Nota Clínica de Enfermagem</string>
+
+    <string name="nurse_export_handoff">Exportar Plantão</string>
+    <string name="nurse_handoff_dialog_title">Relatório de Passagem de Plantão</string>
 </resources>

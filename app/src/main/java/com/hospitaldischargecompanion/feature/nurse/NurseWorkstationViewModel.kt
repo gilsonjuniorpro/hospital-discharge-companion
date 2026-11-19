@@ -42,13 +42,38 @@ data class NurseEpisodeSummary(
     val latestCheckIn: VitalCheckIn?
 )
 
+data class NursingNoteTemplate(
+    val id: String,
+    val title: String,
+    val body: String
+)
+
 data class NurseWorkstationUiState(
     val filter: NurseCensusFilter = NurseCensusFilter.ALL,
     val census: List<NurseEpisodeSummary> = emptyList(),
     val triageQueue: List<ClinicalAlert> = emptyList(),
+    val noteTemplates: List<NursingNoteTemplate> = defaultNursingTemplates(),
     val shiftHandoffSummary: String = "",
     val feedbackBanner: String? = null,
     val isLoading: Boolean = true
+)
+
+private fun defaultNursingTemplates(): List<NursingNoteTemplate> = listOf(
+    NursingNoteTemplate(
+        id = "nt-1",
+        title = "Fluid & Dry-Weight Coaching",
+        body = "Clinical Note: Reinforced <2g sodium, 1.5L fluid limit, and daily morning dry-weight checks."
+    ),
+    NursingNoteTemplate(
+        id = "nt-2",
+        title = "Medication Side-Effect Review",
+        body = "Clinical Note: Assessed dizziness/orthostasis after loop diuretic and GDMT dosing; verified pill-box setup."
+    ),
+    NursingNoteTemplate(
+        id = "nt-3",
+        title = "Escalation Handoff to MD",
+        body = "Clinical Note: Alert escalated to attending physician with updated vitals trend and adherence summary."
+    )
 )
 
 @HiltViewModel
@@ -150,6 +175,19 @@ class NurseWorkstationViewModel @Inject constructor(
                 deepLinkUri = "hdc://episode/$episodeId"
             )
             _banner.value = "Sent recheck reminder and saved nursing clinical note for $patientName."
+        }
+    }
+
+    fun postNursingTemplateNote(episodeId: String, patientName: String, template: NursingNoteTemplate) {
+        viewModelScope.launch {
+            messagingRepository.sendMessage(
+                episodeId = episodeId,
+                senderName = "RN Clara Mendes",
+                senderRole = UserRole.NURSE,
+                body = "${template.body} (Patient: $patientName)",
+                isClinicalNote = true
+            )
+            _banner.value = "Documented '${template.title}' clinical note for $patientName."
         }
     }
 

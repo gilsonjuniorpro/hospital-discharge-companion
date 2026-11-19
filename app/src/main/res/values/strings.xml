@@ -271,4 +271,7 @@
     <string name="family_invite_dialog_title">Invite Family Caregiver</string>
     <string name="family_relationship_hint">Relationship (e.g., Daughter, Spouse)</string>
     <string name="consent_signed_badge">Consent Verified</string>
+
+    <string name="nurse_templates_action">Note Templates</string>
+    <string name="nurse_templates_dialog_title">Document Nursing Clinical Note</string>
 </resources>

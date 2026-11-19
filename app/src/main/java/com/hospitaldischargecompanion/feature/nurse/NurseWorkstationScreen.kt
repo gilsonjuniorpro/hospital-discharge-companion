@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SwapHoriz
 import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,6 +29,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -56,6 +60,7 @@ fun NurseWorkstationScreen(
     viewModel: NurseWorkstationViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    var noteTargetEpisode by remember { mutableStateOf<Pair<String, String>?>(null) }
 
     Scaffold(
         topBar = {
@@ -263,10 +268,42 @@ fun NurseWorkstationScreen(
                             TextButton(onClick = { onOpenMessaging(ep.id) }) {
                                 Text(text = stringResource(R.string.nav_messaging))
                             }
+                            TextButton(onClick = { noteTargetEpisode = ep.id to ep.patientName }) {
+                                Text(text = stringResource(R.string.nurse_templates_action))
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    noteTargetEpisode?.let { (epId, patientName) ->
+        AlertDialog(
+            onDismissRequest = { noteTargetEpisode = null },
+            title = { Text(text = stringResource(R.string.nurse_templates_dialog_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(text = patientName, style = MaterialTheme.typography.titleSmall)
+                    state.noteTemplates.forEach { tpl ->
+                        OutlinedButton(
+                            onClick = {
+                                viewModel.postNursingTemplateNote(epId, patientName, tpl)
+                                noteTargetEpisode = null
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = tpl.title)
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { noteTargetEpisode = null }) {
+                    Text(text = stringResource(R.string.action_cancel))
+                }
+            }
+        )
     }
 }

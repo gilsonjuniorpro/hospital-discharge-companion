@@ -271,4 +271,7 @@
     <string name="family_invite_dialog_title">Invitar Cuidador Familiar</string>
     <string name="family_relationship_hint">Parentesco (ej.: Hija, Cónyuge)</string>
     <string name="consent_signed_badge">Consentimiento Verificado</string>
+
+    <string name="nurse_templates_action">Plantillas Nota</string>
+    <string name="nurse_templates_dialog_title">Documentar Nota Clínica de Enfermería</string>
 </resources>

@@ -11,20 +11,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
+import com.hospitaldischargecompanion.core.appointments.AppointmentItem
 import com.hospitaldischargecompanion.core.appointments.AppointmentStatus
 import com.hospitaldischargecompanion.core.ui.components.ErrorRetryCard
 import com.hospitaldischargecompanion.core.ui.components.LoadingStateBox
@@ -46,6 +53,8 @@ fun AppointmentsScreen(
     viewModel: AppointmentsViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    var rescheduleTarget by remember { mutableStateOf<AppointmentItem?>(null) }
+    var preferredSlotInput by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -138,7 +147,10 @@ fun AppointmentsScreen(
                                 OutlinedButton(onClick = { viewModel.markMissed(appt.id) }) {
                                     Text(text = stringResource(R.string.action_mark_missed))
                                 }
-                                TextButton(onClick = { viewModel.requestReschedule(appt.id, "Earlier Morning Slot · 08:30") }) {
+                                TextButton(onClick = {
+                                    preferredSlotInput = ""
+                                    rescheduleTarget = appt
+                                }) {
                                     Text(text = stringResource(R.string.action_reschedule))
                                 }
                             } else if (appt.status == AppointmentStatus.RESCHEDULE_REQUESTED && state.activeRole.isClinician) {
@@ -151,5 +163,49 @@ fun AppointmentsScreen(
                 }
             }
         }
+    }
+
+    rescheduleTarget?.let { target ->
+        val morning = stringResource(R.string.appointment_slot_morning)
+        val afternoon = stringResource(R.string.appointment_slot_afternoon)
+        AlertDialog(
+            onDismissRequest = { rescheduleTarget = null },
+            title = { Text(text = stringResource(R.string.appointment_reschedule_dialog_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(text = target.title, style = MaterialTheme.typography.titleSmall)
+                    FilterChip(
+                        selected = preferredSlotInput == morning,
+                        onClick = { preferredSlotInput = morning },
+                        label = { Text(text = morning) }
+                    )
+                    FilterChip(
+                        selected = preferredSlotInput == afternoon,
+                        onClick = { preferredSlotInput = afternoon },
+                        label = { Text(text = afternoon) }
+                    )
+                    OutlinedTextField(
+                        value = preferredSlotInput,
+                        onValueChange = { preferredSlotInput = it },
+                        label = { Text(text = stringResource(R.string.appointment_slot_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    viewModel.requestReschedule(target.id, preferredSlotInput.ifBlank { morning })
+                    rescheduleTarget = null
+                }) {
+                    Text(text = stringResource(R.string.action_reschedule))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { rescheduleTarget = null }) {
+                    Text(text = stringResource(R.string.action_cancel))
+                }
+            }
+        )
     }
 }

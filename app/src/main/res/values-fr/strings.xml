@@ -283,4 +283,9 @@
 
     <string name="messaging_filter_clinical_only">Notes Cliniques Uniquement</string>
     <string name="messaging_search_hint">Rechercher dans la conversation</string>
+
+    <string name="appointment_reschedule_dialog_title">Demander un Report de Rendez-vous</string>
+    <string name="appointment_slot_hint">Date et créneau souhaités</string>
+    <string name="appointment_slot_morning">Demain Matin · 08h30</string>
+    <string name="appointment_slot_afternoon">Prochain Après-midi · 14h30</string>
 </resources>

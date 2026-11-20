@@ -283,4 +283,9 @@
 
     <string name="messaging_filter_clinical_only">Apenas Notas Clínicas</string>
     <string name="messaging_search_hint">Buscar mensagens na conversa</string>
+
+    <string name="appointment_reschedule_dialog_title">Solicitar Remarcação de Consulta</string>
+    <string name="appointment_slot_hint">Data e horário preferidos</string>
+    <string name="appointment_slot_morning">Amanhã de Manhã · 08:30</string>
+    <string name="appointment_slot_afternoon">Próxima Tarde · 14:30</string>
 </resources>

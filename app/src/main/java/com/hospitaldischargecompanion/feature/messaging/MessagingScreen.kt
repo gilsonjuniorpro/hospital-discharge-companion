@@ -18,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -110,6 +111,27 @@ fun MessagingScreen(
                     message = err,
                     onRetry = { viewModel.dismissError() },
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp)
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    value = state.searchQuery,
+                    onValueChange = { viewModel.updateSearchQuery(it) },
+                    label = { Text(text = stringResource(R.string.messaging_search_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.weight(1f)
+                )
+                FilterChip(
+                    selected = state.clinicalNotesOnly,
+                    onClick = { viewModel.toggleClinicalNotesOnly() },
+                    label = { Text(text = stringResource(R.string.messaging_filter_clinical_only)) }
                 )
             }
 

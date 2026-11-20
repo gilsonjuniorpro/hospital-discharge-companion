@@ -280,4 +280,7 @@
 
     <string name="physician_active_meds_header">Discharge Medication Summary</string>
     <string name="physician_signed_revisions_header">Signed Care Plan Revisions</string>
+
+    <string name="messaging_filter_clinical_only">Clinical Notes Only</string>
+    <string name="messaging_search_hint">Search thread messages</string>
 </resources>

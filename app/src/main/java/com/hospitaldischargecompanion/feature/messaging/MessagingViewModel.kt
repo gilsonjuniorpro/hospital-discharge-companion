@@ -27,6 +27,8 @@ import javax.inject.Inject
 data class MessagingUiState(
     val episode: DischargeEpisode? = null,
     val activeRole: UserRole = UserRole.PATIENT,
+    val clinicalNotesOnly: Boolean = false,
+    val searchQuery: String = "",
     val messages: List<EpisodeMessage> = emptyList(),
     val templates: List<QuickReplyTemplate> = emptyList(),
     val hasCriticalAlert: Boolean = false,
@@ -45,6 +47,8 @@ class MessagingViewModel @Inject constructor(
 
     private val episodeId: String = savedStateHandle.get<String>("episodeId")
         ?: runCatching { savedStateHandle.toRoute<HdcRoute.Messaging>().episodeId }.getOrDefault("ep-hf-001")
+    private val _clinicalNotesOnly = MutableStateFlow(false)
+    private val _searchQuery = MutableStateFlow("")
     private val _error = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<MessagingUiState> = combine(
@@ -52,13 +56,19 @@ class MessagingViewModel @Inject constructor(
         sessionRepository.sessionState,
         messagingRepository.observeThread(episodeId),
         alertRepository.observeEpisodeAlerts(episodeId),
-        _error
-    ) { episode, session, messages, alerts, error ->
+        combine(_clinicalNotesOnly, _searchQuery, _error) { c, q, e -> Triple(c, q, e) }
+    ) { episode, session, messages, alerts, (notesOnly, query, error) ->
         val role = session.activeRole ?: UserRole.PATIENT
+        val filtered = messages.filter { msg ->
+            (!notesOnly || msg.isClinicalNote) &&
+                (query.isBlank() || msg.body.contains(query, ignoreCase = true) || msg.senderName.contains(query, ignoreCase = true))
+        }
         MessagingUiState(
             episode = episode,
             activeRole = role,
-            messages = messages,
+            clinicalNotesOnly = notesOnly,
+            searchQuery = query,
+            messages = filtered,
             templates = messagingRepository.getQuickReplyTemplates(role),
             hasCriticalAlert = alerts.any { it.isActive && (it.severity == AlertSeverity.CRITICAL || it.severity == AlertSeverity.URGENT) },
             errorMessage = error,
@@ -69,6 +79,14 @@ class MessagingViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = MessagingUiState()
     )
+
+    fun toggleClinicalNotesOnly() {
+        _clinicalNotesOnly.value = !_clinicalNotesOnly.value
+    }
+
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
 
     fun sendMessage(body: String, asClinicalNote: Boolean) {
         val state = uiState.value

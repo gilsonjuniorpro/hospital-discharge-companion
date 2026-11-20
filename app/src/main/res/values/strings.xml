@@ -288,4 +288,6 @@
     <string name="appointment_slot_hint">Preferred date &amp; time slot</string>
     <string name="appointment_slot_morning">Tomorrow Morning · 08:30</string>
     <string name="appointment_slot_afternoon">Next Afternoon · 14:30</string>
+
+    <string name="education_progress_format">Completed %1$d of %2$d discharge guides (%3$d%%)</string>
 </resources>

@@ -288,4 +288,6 @@
     <string name="appointment_slot_hint">Date et créneau souhaités</string>
     <string name="appointment_slot_morning">Demain Matin · 08h30</string>
     <string name="appointment_slot_afternoon">Prochain Après-midi · 14h30</string>
+
+    <string name="education_progress_format">Terminés : %1$d sur %2$d guides de sortie (%3$d%%)</string>
 </resources>

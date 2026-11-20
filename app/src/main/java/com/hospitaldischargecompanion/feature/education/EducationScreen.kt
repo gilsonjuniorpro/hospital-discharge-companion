@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
@@ -74,11 +75,34 @@ fun EducationScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
-                FilterChip(
-                    selected = state.showClinicalDetail,
-                    onClick = { viewModel.toggleClinicalDetail() },
-                    label = { Text(text = stringResource(R.string.education_clinical_detail_toggle)) }
-                )
+                Card(colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = stringResource(
+                                R.string.education_progress_format,
+                                state.completedCount,
+                                state.totalCount,
+                                state.completionPercent
+                            ),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        LinearProgressIndicator(
+                            progress = { (state.completionPercent / 100f).coerceIn(0f, 1f) },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        FilterChip(
+                            selected = state.showClinicalDetail,
+                            onClick = { viewModel.toggleClinicalDetail() },
+                            label = { Text(text = stringResource(R.string.education_clinical_detail_toggle)) }
+                        )
+                    }
+                }
             }
 
             state.quizFeedback?.let { feedback ->

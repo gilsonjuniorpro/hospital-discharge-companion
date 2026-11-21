@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -12,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.hospitaldischargecompanion.core.demo.AppThemeMode
 import com.hospitaldischargecompanion.core.demo.DemoSessionRepository
 import com.hospitaldischargecompanion.core.i18n.LocaleManager
 import com.hospitaldischargecompanion.core.navigation.DeepLinkParser
@@ -43,7 +45,13 @@ class MainActivity : AppCompatActivity() {
                 session?.locale?.let { LocaleManager.applyLocale(it) }
             }
 
-            HdcTheme {
+            val darkTheme = when (session?.themeMode ?: AppThemeMode.SYSTEM) {
+                AppThemeMode.SYSTEM -> isSystemInDarkTheme()
+                AppThemeMode.LIGHT -> false
+                AppThemeMode.DARK -> true
+            }
+
+            HdcTheme(darkTheme = darkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

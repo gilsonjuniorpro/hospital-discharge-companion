@@ -41,6 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.AppLocale
+import com.hospitaldischargecompanion.core.demo.AppThemeMode
 import com.hospitaldischargecompanion.core.demo.DemoScenarioPreset
 import com.hospitaldischargecompanion.core.demo.SimulatedFailureMode
 import com.hospitaldischargecompanion.core.demo.TemperatureUnit
@@ -170,6 +171,28 @@ fun DemoControlsScreen(
                         onClick = { viewModel.setTemperatureUnit(TemperatureUnit.FAHRENHEIT) },
                         label = { Text(text = stringResource(R.string.unit_fahrenheit)) }
                     )
+                }
+                Text(
+                    text = stringResource(R.string.demo_theme_title),
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.padding(top = 10.dp)
+                )
+                Row(
+                    modifier = Modifier.padding(top = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    val modes = listOf(
+                        AppThemeMode.SYSTEM to R.string.theme_system,
+                        AppThemeMode.LIGHT to R.string.theme_light,
+                        AppThemeMode.DARK to R.string.theme_dark
+                    )
+                    modes.forEach { (mode, res) ->
+                        FilterChip(
+                            selected = state.session.themeMode == mode,
+                            onClick = { viewModel.setThemeMode(mode) },
+                            label = { Text(text = stringResource(res)) }
+                        )
+                    }
                 }
             }
 

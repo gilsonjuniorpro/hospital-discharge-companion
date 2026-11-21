@@ -301,4 +301,9 @@
     <string name="scenario_ehr_conflict">EHR 409 Conflict</string>
     <string name="scenario_caregiver_meds">Caregiver Confirmed</string>
     <string name="scenario_physician_amend">Physician Plan v2</string>
+
+    <string name="demo_theme_title">Theme Mode</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
 </resources>

@@ -16,6 +16,7 @@ interface DemoSessionRepository {
     suspend fun setSelectedEpisode(episodeId: String)
     suspend fun setLocale(locale: AppLocale)
     suspend fun setTemperatureUnit(unit: TemperatureUnit)
+    suspend fun setThemeMode(mode: AppThemeMode)
     suspend fun setQuietHoursEnabled(enabled: Boolean)
     suspend fun setCaregiverAlertsEnabled(enabled: Boolean)
     suspend fun resetSession()
@@ -31,6 +32,7 @@ class DataStoreDemoSessionRepository @Inject constructor(
         val SELECTED_EPISODE = stringPreferencesKey("selected_episode")
         val APP_LOCALE = stringPreferencesKey("app_locale")
         val TEMP_UNIT = stringPreferencesKey("temp_unit")
+        val THEME_MODE = stringPreferencesKey("theme_mode")
         val QUIET_HOURS = booleanPreferencesKey("quiet_hours")
         val CAREGIVER_ALERTS = booleanPreferencesKey("caregiver_alerts")
     }
@@ -45,6 +47,9 @@ class DataStoreDemoSessionRepository @Inject constructor(
             temperatureUnit = prefs[Keys.TEMP_UNIT]?.let { raw ->
                 TemperatureUnit.entries.firstOrNull { it.name == raw }
             } ?: TemperatureUnit.CELSIUS,
+            themeMode = prefs[Keys.THEME_MODE]?.let { raw ->
+                AppThemeMode.entries.firstOrNull { it.name == raw }
+            } ?: AppThemeMode.SYSTEM,
             quietHoursEnabled = prefs[Keys.QUIET_HOURS] ?: false,
             caregiverAlertsEnabled = prefs[Keys.CAREGIVER_ALERTS] ?: true
         )
@@ -71,6 +76,12 @@ class DataStoreDemoSessionRepository @Inject constructor(
     override suspend fun setTemperatureUnit(unit: TemperatureUnit) {
         dataStore.edit { prefs ->
             prefs[Keys.TEMP_UNIT] = unit.name
+        }
+    }
+
+    override suspend fun setThemeMode(mode: AppThemeMode) {
+        dataStore.edit { prefs ->
+            prefs[Keys.THEME_MODE] = mode.name
         }
     }
 

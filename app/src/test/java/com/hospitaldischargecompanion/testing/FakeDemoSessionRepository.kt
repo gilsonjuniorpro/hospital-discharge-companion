@@ -1,6 +1,7 @@
 package com.hospitaldischargecompanion.testing
 
 import com.hospitaldischargecompanion.core.demo.AppLocale
+import com.hospitaldischargecompanion.core.demo.AppThemeMode
 import com.hospitaldischargecompanion.core.demo.DemoSessionRepository
 import com.hospitaldischargecompanion.core.demo.DemoSessionState
 import com.hospitaldischargecompanion.core.demo.TemperatureUnit
@@ -33,6 +34,10 @@ class FakeDemoSessionRepository(
 
     override suspend fun setTemperatureUnit(unit: TemperatureUnit) {
         state.update { it.copy(temperatureUnit = unit) }
+    }
+
+    override suspend fun setThemeMode(mode: AppThemeMode) {
+        state.update { it.copy(themeMode = mode) }
     }
 
     override suspend fun setQuietHoursEnabled(enabled: Boolean) {

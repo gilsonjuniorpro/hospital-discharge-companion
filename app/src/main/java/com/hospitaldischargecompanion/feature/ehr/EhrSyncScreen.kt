@@ -10,8 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,6 +27,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -136,6 +140,9 @@ fun EhrSyncScreen(
                                     Text(text = stringResource(R.string.ehr_pull_summary))
                                 }
                             }
+                            TextButton(onClick = { viewModel.inspectFhirBundle() }) {
+                                Text(text = stringResource(R.string.ehr_inspect_fhir_bundle))
+                            }
                         }
                     }
                 }
@@ -217,5 +224,24 @@ fun EhrSyncScreen(
                 }
             }
         }
+    }
+
+    state.fhirBundlePreviewJson?.let { json ->
+        AlertDialog(
+            onDismissRequest = { viewModel.dismissFhirBundle() },
+            title = { Text(text = stringResource(R.string.ehr_fhir_bundle_dialog_title)) },
+            text = {
+                Text(
+                    text = json,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { viewModel.dismissFhirBundle() }) {
+                    Text(text = stringResource(R.string.action_close))
+                }
+            }
+        )
     }
 }

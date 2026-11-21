@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -41,6 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.SimulatedFailureMode
 import com.hospitaldischargecompanion.core.ehr.ConflictResolutionChoice
+import com.hospitaldischargecompanion.core.ui.HdcTestTags
 import com.hospitaldischargecompanion.core.ui.components.EhrSyncStatusChip
 import com.hospitaldischargecompanion.core.ui.components.ErrorRetryCard
 import com.hospitaldischargecompanion.core.ui.components.SectionHeader
@@ -72,7 +74,8 @@ fun EhrSyncScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .testTag(HdcTestTags.SCREEN_EHR_SYNC),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {

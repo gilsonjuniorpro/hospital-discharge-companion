@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -46,6 +47,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.TemperatureUnit
 import com.hospitaldischargecompanion.core.telemonitor.VitalCheckIn
+import com.hospitaldischargecompanion.core.ui.HdcTestTags
 import com.hospitaldischargecompanion.core.ui.components.ErrorRetryCard
 import com.hospitaldischargecompanion.core.ui.components.LoadingStateBox
 import com.hospitaldischargecompanion.core.ui.components.SectionHeader
@@ -85,7 +87,8 @@ fun TelemonitoringScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .testTag(HdcTestTags.SCREEN_TELEMONITORING),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {

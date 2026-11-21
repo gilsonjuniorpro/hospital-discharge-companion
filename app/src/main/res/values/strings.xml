@@ -293,4 +293,12 @@
 
     <string name="ehr_inspect_fhir_bundle">Inspect FHIR Bundle</string>
     <string name="ehr_fhir_bundle_dialog_title">Mock FHIR R4 Bundle Payload</string>
+
+    <string name="demo_scenarios_title">One-Tap Clinical Scenarios</string>
+    <string name="scenario_full_adherence">Full Adherence</string>
+    <string name="scenario_missed_dose">Missed Diuretic</string>
+    <string name="scenario_critical_bp">Critical BP Alert</string>
+    <string name="scenario_ehr_conflict">EHR 409 Conflict</string>
+    <string name="scenario_caregiver_meds">Caregiver Confirmed</string>
+    <string name="scenario_physician_amend">Physician Plan v2</string>
 </resources>

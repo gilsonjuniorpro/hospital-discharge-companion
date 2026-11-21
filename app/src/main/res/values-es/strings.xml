@@ -293,4 +293,12 @@
 
     <string name="ehr_inspect_fhir_bundle">Inspeccionar Bundle FHIR</string>
     <string name="ehr_fhir_bundle_dialog_title">Payload Simulado de Bundle FHIR R4</string>
+
+    <string name="demo_scenarios_title">Escenarios Clínicos Rápidos</string>
+    <string name="scenario_full_adherence">Adherencia Total</string>
+    <string name="scenario_missed_dose">Dosis Omitida</string>
+    <string name="scenario_critical_bp">Alerta PA Crítica</string>
+    <string name="scenario_ehr_conflict">Conflicto EHR 409</string>
+    <string name="scenario_caregiver_meds">Cuidador Confirmó</string>
+    <string name="scenario_physician_amend">Médico Enmendó v2</string>
 </resources>

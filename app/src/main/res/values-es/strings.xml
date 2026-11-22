@@ -283,4 +283,9 @@
 
     <string name="messaging_filter_clinical_only">Solo Notas Clínicas</string>
     <string name="messaging_search_hint">Buscar mensajes en el hilo</string>
+
+    <string name="appointment_reschedule_dialog_title">Solicitar Reprogramación de Cita</string>
+    <string name="appointment_slot_hint">Fecha y horario preferidos</string>
+    <string name="appointment_slot_morning">Mañana por la Mañana · 08:30</string>
+    <string name="appointment_slot_afternoon">Próxima Tarde · 14:30</string>
 </resources>

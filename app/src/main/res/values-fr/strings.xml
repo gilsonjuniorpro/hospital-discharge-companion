@@ -290,4 +290,7 @@
     <string name="appointment_slot_afternoon">Prochain Après-midi · 14h30</string>
 
     <string name="education_progress_format">Terminés : %1$d sur %2$d guides de sortie (%3$d%%)</string>
+
+    <string name="ehr_inspect_fhir_bundle">Inspecter Bundle FHIR</string>
+    <string name="ehr_fhir_bundle_dialog_title">Charge Utile Simulée Bundle FHIR R4</string>
 </resources>

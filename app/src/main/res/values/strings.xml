@@ -290,4 +290,7 @@
     <string name="appointment_slot_afternoon">Next Afternoon · 14:30</string>
 
     <string name="education_progress_format">Completed %1$d of %2$d discharge guides (%3$d%%)</string>
+
+    <string name="ehr_inspect_fhir_bundle">Inspect FHIR Bundle</string>
+    <string name="ehr_fhir_bundle_dialog_title">Mock FHIR R4 Bundle Payload</string>
 </resources>

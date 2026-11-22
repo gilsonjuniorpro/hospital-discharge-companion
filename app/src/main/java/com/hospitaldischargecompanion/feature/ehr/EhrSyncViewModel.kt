@@ -14,12 +14,16 @@ import com.hospitaldischargecompanion.core.ehr.ConflictResolutionChoice
 import com.hospitaldischargecompanion.core.ehr.EhrConflictRecord
 import com.hospitaldischargecompanion.core.ehr.EhrSyncLogEntry
 import com.hospitaldischargecompanion.core.ehr.EhrSyncRepository
+import com.hospitaldischargecompanion.core.ehr.FhirBundleSerializer
+import com.hospitaldischargecompanion.core.medication.MedicationRepository
 import com.hospitaldischargecompanion.core.navigation.HdcRoute
+import com.hospitaldischargecompanion.core.telemonitor.TelemonitoringRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,6 +33,7 @@ data class EhrSyncUiState(
     val networkConfig: DemoNetworkConfig = DemoNetworkConfig(),
     val logs: List<EhrSyncLogEntry> = emptyList(),
     val openConflicts: List<EhrConflictRecord> = emptyList(),
+    val fhirBundlePreviewJson: String? = null,
     val isSyncing: Boolean = false,
     val feedbackBanner: String? = null,
     val errorMessage: String? = null
@@ -39,6 +44,8 @@ class EhrSyncViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     episodeRepository: DischargeEpisodeRepository,
     private val ehrSyncRepository: EhrSyncRepository,
+    private val medicationRepository: MedicationRepository,
+    private val telemonitoringRepository: TelemonitoringRepository,
     private val networkSimulator: DemoNetworkSimulator
 ) : ViewModel() {
 
@@ -46,19 +53,21 @@ class EhrSyncViewModel @Inject constructor(
         ?: runCatching { savedStateHandle.toRoute<HdcRoute.EhrSync>().episodeId }.getOrDefault("ep-hf-001")
     private val _busy = MutableStateFlow(false)
     private val _feedback = MutableStateFlow<Pair<String?, String?>>(null to null)
+    private val _bundlePreview = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<EhrSyncUiState> = combine(
         episodeRepository.observeEpisode(episodeId),
         networkSimulator.config,
         ehrSyncRepository.observeLogs(episodeId),
         ehrSyncRepository.observeOpenConflicts(episodeId),
-        combine(_busy, _feedback) { b, f -> b to f }
-    ) { episode, config, logs, conflicts, (busy, feedback) ->
+        combine(_busy, _feedback, _bundlePreview) { b, f, p -> Triple(b, f, p) }
+    ) { episode, config, logs, conflicts, (busy, feedback, bundlePreview) ->
         EhrSyncUiState(
             episode = episode,
             networkConfig = config,
             logs = logs,
             openConflicts = conflicts,
+            fhirBundlePreviewJson = bundlePreview,
             isSyncing = busy,
             feedbackBanner = feedback.first,
             errorMessage = feedback.second
@@ -68,6 +77,19 @@ class EhrSyncViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = EhrSyncUiState()
     )
+
+    fun inspectFhirBundle() {
+        val ep = uiState.value.episode ?: return
+        viewModelScope.launch {
+            val meds = medicationRepository.observeMedications(episodeId).first()
+            val latest = telemonitoringRepository.observeCheckIns(episodeId).first().lastOrNull()
+            _bundlePreview.value = FhirBundleSerializer.toPrettyJson(ep, meds, latest)
+        }
+    }
+
+    fun dismissFhirBundle() {
+        _bundlePreview.value = null
+    }
 
     fun setFailureMode(mode: SimulatedFailureMode) {
         networkSimulator.setFailureMode(mode)

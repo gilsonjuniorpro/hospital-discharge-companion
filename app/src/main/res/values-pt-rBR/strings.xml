@@ -290,4 +290,7 @@
     <string name="appointment_slot_afternoon">Próxima Tarde · 14:30</string>
 
     <string name="education_progress_format">Concluídos %1$d de %2$d guias de alta (%3$d%%)</string>
+
+    <string name="ehr_inspect_fhir_bundle">Inspecionar Bundle FHIR</string>
+    <string name="ehr_fhir_bundle_dialog_title">Payload Simulado de Bundle FHIR R4</string>
 </resources>

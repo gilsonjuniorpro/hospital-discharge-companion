@@ -37,6 +37,12 @@ enum class TemperatureUnit {
     FAHRENHEIT
 }
 
+enum class AppThemeMode {
+    SYSTEM,
+    LIGHT,
+    DARK
+}
+
 enum class SimulatedFailureMode {
     NONE,
     TIMEOUT,
@@ -55,6 +61,7 @@ data class DemoSessionState(
     val selectedEpisodeId: String = "ep-hf-001",
     val locale: AppLocale = AppLocale.EN,
     val temperatureUnit: TemperatureUnit = TemperatureUnit.CELSIUS,
+    val themeMode: AppThemeMode = AppThemeMode.SYSTEM,
     val quietHoursEnabled: Boolean = false,
     val caregiverAlertsEnabled: Boolean = true
 )

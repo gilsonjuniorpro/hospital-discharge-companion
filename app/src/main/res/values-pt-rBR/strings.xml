@@ -301,4 +301,9 @@
     <string name="scenario_ehr_conflict">Conflito EHR 409</string>
     <string name="scenario_caregiver_meds">Cuidador Confirmou</string>
     <string name="scenario_physician_amend">Médico Emendou v2</string>
+
+    <string name="demo_theme_title">Tema do aplicativo</string>
+    <string name="theme_system">Sistema</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
 </resources>

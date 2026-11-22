@@ -301,4 +301,9 @@
     <string name="scenario_ehr_conflict">Conflit DPI 409</string>
     <string name="scenario_caregiver_meds">Aidant a Confirmé</string>
     <string name="scenario_physician_amend">Médecin Plan v2</string>
+
+    <string name="demo_theme_title">Thème de l\'application</string>
+    <string name="theme_system">Système</string>
+    <string name="theme_light">Clair</string>
+    <string name="theme_dark">Sombre</string>
 </resources>

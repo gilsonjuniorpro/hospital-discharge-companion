@@ -3,6 +3,7 @@ package com.hospitaldischargecompanion.feature.demo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hospitaldischargecompanion.core.demo.AppLocale
+import com.hospitaldischargecompanion.core.demo.AppThemeMode
 import com.hospitaldischargecompanion.core.demo.DemoNetworkConfig
 import com.hospitaldischargecompanion.core.demo.DemoNetworkSimulator
 import com.hospitaldischargecompanion.core.demo.DemoScenarioPreset
@@ -66,6 +67,10 @@ class DemoControlsViewModel @Inject constructor(
 
     fun setTemperatureUnit(unit: TemperatureUnit) {
         viewModelScope.launch { sessionRepository.setTemperatureUnit(unit) }
+    }
+
+    fun setThemeMode(mode: AppThemeMode) {
+        viewModelScope.launch { sessionRepository.setThemeMode(mode) }
     }
 
     fun setQuietHours(enabled: Boolean) {

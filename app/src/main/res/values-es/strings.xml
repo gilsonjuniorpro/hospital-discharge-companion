@@ -243,4 +243,9 @@
     <string name="med_skip_reason_nausea">Náuseas / malestar estomacal</string>
     <string name="med_skip_reason_supply">Sin suministro</string>
     <string name="med_skip_reason_custom_hint">Nota adicional (opcional)</string>
+
+    <string name="care_plan_progress_format">Progreso: %1$d de %2$d tareas completadas (%3$d%%)</string>
+    <string name="filter_due">Pendientes</string>
+    <string name="filter_completed">Completadas</string>
+    <string name="filter_skipped">Omitidas</string>
 </resources>

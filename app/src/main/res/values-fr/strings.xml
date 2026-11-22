@@ -243,4 +243,9 @@
     <string name="med_skip_reason_nausea">Nausées / maux d\'estomac</string>
     <string name="med_skip_reason_supply">Rupture de stock</string>
     <string name="med_skip_reason_custom_hint">Note complémentaire (optionnel)</string>
+
+    <string name="care_plan_progress_format">Avancement : %1$d sur %2$d tâches terminées (%3$d%%)</string>
+    <string name="filter_due">À faire</string>
+    <string name="filter_completed">Terminées</string>
+    <string name="filter_skipped">Ignorées</string>
 </resources>

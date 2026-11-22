@@ -243,4 +243,9 @@
     <string name="med_skip_reason_nausea">Náusea / mal-estar gástrico</string>
     <string name="med_skip_reason_supply">Sem medicamento disponível</string>
     <string name="med_skip_reason_custom_hint">Observação adicional (opcional)</string>
+
+    <string name="care_plan_progress_format">Progresso: %1$d de %2$d tarefas concluídas (%3$d%%)</string>
+    <string name="filter_due">Pendentes</string>
+    <string name="filter_completed">Concluídas</string>
+    <string name="filter_skipped">Puladas</string>
 </resources>

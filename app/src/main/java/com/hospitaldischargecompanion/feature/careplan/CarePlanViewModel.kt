@@ -10,6 +10,7 @@ import com.hospitaldischargecompanion.core.demo.UserRole
 import com.hospitaldischargecompanion.core.discharge.CarePlanRepository
 import com.hospitaldischargecompanion.core.discharge.CarePlanRevision
 import com.hospitaldischargecompanion.core.discharge.CarePlanTask
+import com.hospitaldischargecompanion.core.discharge.CarePlanTaskStatus
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisode
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisodeRepository
 import com.hospitaldischargecompanion.core.navigation.HdcRoute
@@ -25,6 +26,10 @@ import javax.inject.Inject
 data class CarePlanUiState(
     val episode: DischargeEpisode? = null,
     val activeRole: UserRole = UserRole.PATIENT,
+    val selectedStatusFilter: CarePlanTaskStatus? = null,
+    val completedCount: Int = 0,
+    val totalCount: Int = 0,
+    val completionPercent: Int = 0,
     val tasks: List<CarePlanTask> = emptyList(),
     val revisions: List<CarePlanRevision> = emptyList(),
     val exportedSummary: String? = null,
@@ -42,6 +47,7 @@ class CarePlanViewModel @Inject constructor(
 
     private val episodeId: String = savedStateHandle.get<String>("episodeId")
         ?: runCatching { savedStateHandle.toRoute<HdcRoute.CarePlan>().episodeId }.getOrDefault("ep-hf-001")
+    private val _selectedFilter = MutableStateFlow<CarePlanTaskStatus?>(null)
     private val _exportedSummary = MutableStateFlow<String?>(null)
     private val _errorMessage = MutableStateFlow<String?>(null)
 
@@ -50,12 +56,20 @@ class CarePlanViewModel @Inject constructor(
         sessionRepository.sessionState,
         carePlanRepository.observeTasks(episodeId),
         carePlanRepository.observeRevisions(episodeId),
-        combine(_exportedSummary, _errorMessage) { exp, err -> exp to err }
-    ) { episode, session, tasks, revisions, (exported, error) ->
+        combine(_selectedFilter, _exportedSummary, _errorMessage) { f, exp, err -> Triple(f, exp, err) }
+    ) { episode, session, tasks, revisions, (filter, exported, error) ->
+        val completed = tasks.count { it.status == CarePlanTaskStatus.COMPLETED }
+        val total = tasks.size
+        val pct = if (total == 0) 0 else (completed * 100) / total
+        val visibleTasks = filter?.let { f -> tasks.filter { it.status == f } } ?: tasks
         CarePlanUiState(
             episode = episode,
             activeRole = session.activeRole ?: UserRole.PATIENT,
-            tasks = tasks,
+            selectedStatusFilter = filter,
+            completedCount = completed,
+            totalCount = total,
+            completionPercent = pct,
+            tasks = visibleTasks,
             revisions = revisions,
             exportedSummary = exported,
             errorMessage = error,
@@ -66,6 +80,10 @@ class CarePlanViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = CarePlanUiState()
     )
+
+    fun selectStatusFilter(status: CarePlanTaskStatus?) {
+        _selectedFilter.value = status
+    }
 
     fun completeTask(taskId: String) {
         val state = uiState.value

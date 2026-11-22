@@ -243,4 +243,9 @@
     <string name="med_skip_reason_nausea">Nausea / upset stomach</string>
     <string name="med_skip_reason_supply">Out of supply</string>
     <string name="med_skip_reason_custom_hint">Additional note (optional)</string>
+
+    <string name="care_plan_progress_format">Progress: %1$d of %2$d tasks completed (%3$d%%)</string>
+    <string name="filter_due">Due</string>
+    <string name="filter_completed">Completed</string>
+    <string name="filter_skipped">Skipped</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.SwapHoriz
 import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -40,6 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.carecircle.CareCircleMemberStatus
+import com.hospitaldischargecompanion.core.carecircle.CaregiverPermission
 import com.hospitaldischargecompanion.core.ui.components.ErrorRetryCard
 import com.hospitaldischargecompanion.core.ui.components.LoadingStateBox
 import com.hospitaldischargecompanion.core.ui.components.RiskTierBadge
@@ -61,6 +63,9 @@ fun FamilyHomeScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var inviteCodeInput by remember { mutableStateOf("") }
     var inviteNameInput by remember { mutableStateOf("") }
+    var showInviteDialog by remember { mutableStateOf(false) }
+    var newMemberName by remember { mutableStateOf("") }
+    var newMemberRelation by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -137,7 +142,16 @@ fun FamilyHomeScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(text = episode.patientName, style = MaterialTheme.typography.titleLarge)
-                            RiskTierBadge(riskTier = episode.riskTier)
+                            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                if (episode.consentSigned) {
+                                    StatusPill(
+                                        label = stringResource(R.string.consent_signed_badge),
+                                        containerColor = HdcColors.StatusSuccessContainer,
+                                        contentColor = HdcColors.StatusSuccess
+                                    )
+                                }
+                                RiskTierBadge(riskTier = episode.riskTier)
+                            }
                         }
                         Text(text = episode.diagnosisTitle, style = MaterialTheme.typography.bodyMedium)
                         Text(
@@ -219,7 +233,11 @@ fun FamilyHomeScreen(
             }
 
             item {
-                SectionHeader(title = stringResource(R.string.family_care_circle_title))
+                SectionHeader(
+                    title = stringResource(R.string.family_care_circle_title),
+                    actionLabel = stringResource(R.string.family_invite_member_action),
+                    onAction = { showInviteDialog = true }
+                )
                 Text(
                     text = stringResource(R.string.care_circle_code_format, episode.careCircleInviteCode),
                     style = MaterialTheme.typography.labelSmall,
@@ -307,5 +325,49 @@ fun FamilyHomeScreen(
                 }
             }
         }
+    }
+
+    if (showInviteDialog) {
+        AlertDialog(
+            onDismissRequest = { showInviteDialog = false },
+            title = { Text(text = stringResource(R.string.family_invite_dialog_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = newMemberName,
+                        onValueChange = { newMemberName = it },
+                        label = { Text(text = stringResource(R.string.family_caregiver_name_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    OutlinedTextField(
+                        value = newMemberRelation,
+                        onValueChange = { newMemberRelation = it },
+                        label = { Text(text = stringResource(R.string.family_relationship_hint)) },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    viewModel.inviteCaregiver(
+                        name = newMemberName,
+                        relationship = newMemberRelation,
+                        permission = CaregiverPermission.ASSIST_MEDS_AND_CHECKINS
+                    )
+                    newMemberName = ""
+                    newMemberRelation = ""
+                    showInviteDialog = false
+                }) {
+                    Text(text = stringResource(R.string.family_invite_member_action))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showInviteDialog = false }) {
+                    Text(text = stringResource(R.string.action_cancel))
+                }
+            }
+        )
     }
 }

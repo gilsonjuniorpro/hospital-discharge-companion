@@ -266,4 +266,9 @@
     <string name="ladder_stage_nurse">Enferm.</string>
     <string name="ladder_stage_physician">Médico</string>
     <string name="ladder_stage_er">Urgencias</string>
+
+    <string name="family_invite_member_action">Invitar Cuidador</string>
+    <string name="family_invite_dialog_title">Invitar Cuidador Familiar</string>
+    <string name="family_relationship_hint">Parentesco (ej.: Hija, Cónyuge)</string>
+    <string name="consent_signed_badge">Consentimiento Verificado</string>
 </resources>

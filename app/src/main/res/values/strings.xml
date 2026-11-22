@@ -266,4 +266,9 @@
     <string name="ladder_stage_nurse">Nurse</string>
     <string name="ladder_stage_physician">Physician</string>
     <string name="ladder_stage_er">Advise ER</string>
+
+    <string name="family_invite_member_action">Invite Caregiver</string>
+    <string name="family_invite_dialog_title">Invite Family Caregiver</string>
+    <string name="family_relationship_hint">Relationship (e.g., Daughter, Spouse)</string>
+    <string name="consent_signed_badge">Consent Verified</string>
 </resources>

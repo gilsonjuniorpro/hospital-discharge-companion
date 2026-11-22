@@ -119,6 +119,16 @@ class FamilyHomeViewModel @Inject constructor(
         }
     }
 
+    fun inviteCaregiver(name: String, relationship: String, permission: CaregiverPermission) {
+        val ep = uiState.value.episode ?: return
+        viewModelScope.launch {
+            when (val res = careCircleRepository.invite(ep.id, name, relationship, permission)) {
+                is DomainResult.Success -> _feedback.value = "Invited ${res.data.name} to the Care Circle." to null
+                is DomainResult.Failure -> _feedback.value = null to res.error.detail
+            }
+        }
+    }
+
     fun acceptInviteCode(code: String, name: String) {
         viewModelScope.launch {
             when (val res = careCircleRepository.acceptByCode(code, name, "Family")) {

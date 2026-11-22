@@ -191,6 +191,25 @@ class NurseWorkstationViewModel @Inject constructor(
         }
     }
 
+    fun buildShiftHandoffReport(): String {
+        val s = uiState.value
+        return buildString {
+            appendLine("NURSING SHIFT HANDOFF REPORT (DEMO)")
+            appendLine(s.shiftHandoffSummary)
+            appendLine()
+            appendLine("ACTIVE CENSUS:")
+            s.census.forEach { item ->
+                val ep = item.episode
+                appendLine("- ${ep.patientName} (${ep.riskTier}) · ${ep.diagnosisTitle} · Adherence ${item.adherencePercent}% · Alerts ${item.openAlertsCount}")
+            }
+            appendLine()
+            appendLine("OPEN TRIAGE ALERTS:")
+            s.triageQueue.forEach { alert ->
+                appendLine("- [${alert.severity}] ${alert.title} (${alert.escalationStage})")
+            }
+        }
+    }
+
     fun bulkSendReminders() {
         val visible = uiState.value.census
         viewModelScope.launch {

@@ -61,6 +61,7 @@ fun NurseWorkstationScreen(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var noteTargetEpisode by remember { mutableStateOf<Pair<String, String>?>(null) }
+    var handoffReport by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         topBar = {
@@ -131,8 +132,13 @@ fun NurseWorkstationScreen(
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(text = state.shiftHandoffSummary, style = MaterialTheme.typography.bodyMedium)
-                        OutlinedButton(onClick = { viewModel.bulkSendReminders() }) {
-                            Text(text = stringResource(R.string.nurse_bulk_remind))
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            OutlinedButton(onClick = { viewModel.bulkSendReminders() }) {
+                                Text(text = stringResource(R.string.nurse_bulk_remind))
+                            }
+                            TextButton(onClick = { handoffReport = viewModel.buildShiftHandoffReport() }) {
+                                Text(text = stringResource(R.string.nurse_export_handoff))
+                            }
                         }
                     }
                 }
@@ -276,6 +282,19 @@ fun NurseWorkstationScreen(
                 }
             }
         }
+    }
+
+    handoffReport?.let { report ->
+        AlertDialog(
+            onDismissRequest = { handoffReport = null },
+            title = { Text(text = stringResource(R.string.nurse_handoff_dialog_title)) },
+            text = { Text(text = report, style = MaterialTheme.typography.bodySmall) },
+            confirmButton = {
+                TextButton(onClick = { handoffReport = null }) {
+                    Text(text = stringResource(R.string.action_close))
+                }
+            }
+        )
     }
 
     noteTargetEpisode?.let { (epId, patientName) ->

@@ -149,4 +149,18 @@
     <string name="action_view_all">View All</string>
     <string name="action_confirm">Confirm</string>
     <string name="action_revoke">Revoke</string>
+
+    <string name="nurse_workstation_title">Nurse Triage Hub</string>
+    <string name="nurse_workstation_subtitle">Telemonitoring queue &amp; active discharge census</string>
+    <string name="nurse_handoff_title">Shift Handoff Summary</string>
+    <string name="nurse_bulk_remind">Bulk Send Check-In Reminders</string>
+    <string name="nurse_triage_queue_title">Triage Alert Queue (%1$d)</string>
+    <string name="nurse_escalate_md">Escalate MD</string>
+    <string name="nurse_census_title">Active Discharge Census</string>
+    <string name="nurse_census_metrics">Adherence %1$d%% · %2$d alert(s) · %3$d overdue</string>
+    <string name="nurse_request_recheck_note">Recheck + Note</string>
+    <string name="filter_all">All</string>
+    <string name="filter_high_risk">High Risk</string>
+    <string name="filter_overdue">Overdue</string>
+    <string name="filter_open_alerts">Open Alerts</string>
 </resources>

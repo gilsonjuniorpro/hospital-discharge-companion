@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.PhotoCamera
 import androidx.compose.material.icons.outlined.WarningAmber
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -24,12 +25,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -55,6 +60,8 @@ fun MedicationScreen(
     viewModel: MedicationViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    var skipTargetMed by remember { mutableStateOf<MedicationItem?>(null) }
+    var skipReasonNote by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -170,7 +177,10 @@ fun MedicationScreen(
                     med = med,
                     highlighted = med.id == state.highlightMedicationId,
                     onTake = { viewModel.recordDose(med, DoseActionType.TAKEN) },
-                    onSkip = { viewModel.recordDose(med, DoseActionType.SKIPPED, "Reported skipped from medication list") },
+                    onSkip = {
+                        skipReasonNote = ""
+                        skipTargetMed = med
+                    },
                     onSnooze = { viewModel.recordDose(med, DoseActionType.SNOOZED, "Snoozed 30 minutes") },
                     onAttachPhoto = { viewModel.attachMockPillBox(med.id) },
                     onRequestRefill = { viewModel.requestRefill(med.id) }
@@ -201,6 +211,53 @@ fun MedicationScreen(
                 }
             }
         }
+    }
+
+    skipTargetMed?.let { med ->
+        val presets = listOf(
+            stringResource(R.string.med_skip_reason_dizziness),
+            stringResource(R.string.med_skip_reason_nausea),
+            stringResource(R.string.med_skip_reason_supply)
+        )
+        AlertDialog(
+            onDismissRequest = { skipTargetMed = null },
+            title = { Text(text = stringResource(R.string.med_skip_dialog_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(text = "${med.name} ${med.strengthAndForm}", style = MaterialTheme.typography.titleSmall)
+                    presets.forEach { preset ->
+                        FilterChip(
+                            selected = skipReasonNote == preset,
+                            onClick = { skipReasonNote = preset },
+                            label = { Text(text = preset) }
+                        )
+                    }
+                    OutlinedTextField(
+                        value = skipReasonNote,
+                        onValueChange = { skipReasonNote = it },
+                        label = { Text(text = stringResource(R.string.med_skip_reason_custom_hint)) },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    viewModel.recordDose(
+                        med = med,
+                        action = DoseActionType.SKIPPED,
+                        reason = skipReasonNote.ifBlank { "Skipped by patient/caregiver" }
+                    )
+                    skipTargetMed = null
+                }) {
+                    Text(text = stringResource(R.string.action_skip))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { skipTargetMed = null }) {
+                    Text(text = stringResource(R.string.action_cancel))
+                }
+            }
+        )
     }
 }
 

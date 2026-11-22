@@ -237,4 +237,10 @@
     <string name="med_filter_changed">Changed</string>
     <string name="med_filter_continued">Continued</string>
     <string name="med_filter_stopped">Stopped</string>
+
+    <string name="med_skip_dialog_title">Why was this dose skipped?</string>
+    <string name="med_skip_reason_dizziness">Dizziness / lightheaded</string>
+    <string name="med_skip_reason_nausea">Nausea / upset stomach</string>
+    <string name="med_skip_reason_supply">Out of supply</string>
+    <string name="med_skip_reason_custom_hint">Additional note (optional)</string>
 </resources>

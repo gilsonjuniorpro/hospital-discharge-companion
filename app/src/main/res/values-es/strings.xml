@@ -248,4 +248,10 @@
     <string name="filter_due">Pendientes</string>
     <string name="filter_completed">Completadas</string>
     <string name="filter_skipped">Omitidas</string>
+
+    <string name="care_plan_assigned_to_format">Asignado a: %1$s</string>
+    <string name="care_plan_reassign_title">Reabrir y Reasignar Tarea</string>
+    <string name="assignee_patient">Paciente</string>
+    <string name="assignee_caregiver">Cuidador Familiar</string>
+    <string name="assignee_home_nurse">Enfermería Domiciliaria</string>
 </resources>

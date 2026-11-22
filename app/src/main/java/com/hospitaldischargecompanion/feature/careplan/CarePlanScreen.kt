@@ -63,6 +63,7 @@ fun CarePlanScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     var skipTargetTask by remember { mutableStateOf<CarePlanTask?>(null) }
     var skipReason by remember { mutableStateOf("") }
+    var reassignTargetTask by remember { mutableStateOf<CarePlanTask?>(null) }
     var showRevisions by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -193,7 +194,7 @@ fun CarePlanScreen(
                             skipReason = ""
                             skipTargetTask = task
                         },
-                        onReopen = { viewModel.reopenTask(task.id) }
+                        onReopen = { reassignTargetTask = task }
                     )
                 }
             }
@@ -231,6 +232,40 @@ fun CarePlanScreen(
             },
             dismissButton = {
                 TextButton(onClick = { skipTargetTask = null }) {
+                    Text(text = stringResource(R.string.action_cancel))
+                }
+            }
+        )
+    }
+
+    reassignTargetTask?.let { target ->
+        val assignees = listOf(
+            stringResource(R.string.assignee_patient),
+            stringResource(R.string.assignee_caregiver),
+            stringResource(R.string.assignee_home_nurse)
+        )
+        AlertDialog(
+            onDismissRequest = { reassignTargetTask = null },
+            title = { Text(text = stringResource(R.string.care_plan_reassign_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(text = target.title, style = MaterialTheme.typography.bodyMedium)
+                    assignees.forEach { assignee ->
+                        OutlinedButton(
+                            onClick = {
+                                viewModel.reopenTask(target.id, assignee)
+                                reassignTargetTask = null
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = assignee)
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { reassignTargetTask = null }) {
                     Text(text = stringResource(R.string.action_cancel))
                 }
             }
@@ -326,6 +361,11 @@ private fun CarePlanTaskCard(
                 text = task.instructions,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Text(
+                text = stringResource(R.string.care_plan_assigned_to_format, task.assignedToLabel),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.secondary
             )
             task.completedByLabel?.let { actor ->
                 Text(

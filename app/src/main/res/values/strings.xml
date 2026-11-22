@@ -248,4 +248,10 @@
     <string name="filter_due">Due</string>
     <string name="filter_completed">Completed</string>
     <string name="filter_skipped">Skipped</string>
+
+    <string name="care_plan_assigned_to_format">Assigned to: %1$s</string>
+    <string name="care_plan_reassign_title">Reopen &amp; Reassign Task</string>
+    <string name="assignee_patient">Patient</string>
+    <string name="assignee_caregiver">Family Caregiver</string>
+    <string name="assignee_home_nurse">Home Health Nurse</string>
 </resources>

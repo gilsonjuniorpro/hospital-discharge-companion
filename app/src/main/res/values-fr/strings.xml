@@ -248,4 +248,10 @@
     <string name="filter_due">À faire</string>
     <string name="filter_completed">Terminées</string>
     <string name="filter_skipped">Ignorées</string>
+
+    <string name="care_plan_assigned_to_format">Assigné à : %1$s</string>
+    <string name="care_plan_reassign_title">Rouvrir et Réassigner la Tâche</string>
+    <string name="assignee_patient">Patient</string>
+    <string name="assignee_caregiver">Proche Aidant</string>
+    <string name="assignee_home_nurse">Infirmier à Domicile</string>
 </resources>

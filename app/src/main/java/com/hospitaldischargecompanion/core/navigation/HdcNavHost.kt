@@ -19,7 +19,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.UserRole
+import com.hospitaldischargecompanion.feature.alerts.AlertsScreen
 import com.hospitaldischargecompanion.feature.careplan.CarePlanScreen
+import com.hospitaldischargecompanion.feature.family.FamilyHomeScreen
 import com.hospitaldischargecompanion.feature.medications.MedicationScreen
 import com.hospitaldischargecompanion.feature.patient.PatientHomeScreen
 import com.hospitaldischargecompanion.feature.profile.ProfileSelectionScreen
@@ -69,7 +71,14 @@ fun HdcNavHost(
         }
 
         composable<HdcRoute.FamilyHome> {
-            RolePlaceholderScreen(stringResource(R.string.role_family_title), navigateToProfile)
+            FamilyHomeScreen(
+                onSwitchRole = navigateToProfile,
+                onOpenDemoControls = { navController.navigate(HdcRoute.DemoControls) },
+                onOpenMedications = { epId -> navController.navigate(HdcRoute.Medications(epId)) },
+                onOpenTelemonitoring = { epId -> navController.navigate(HdcRoute.Telemonitoring(epId)) },
+                onOpenAlerts = { epId -> navController.navigate(HdcRoute.Alerts(epId)) },
+                onOpenMessaging = { epId -> navController.navigate(HdcRoute.Messaging(epId)) }
+            )
         }
         composable<HdcRoute.NurseWorkstation> {
             RolePlaceholderScreen(stringResource(R.string.role_nurse_title), navigateToProfile)
@@ -90,7 +99,7 @@ fun HdcNavHost(
             )
         }
         composable<HdcRoute.Alerts> {
-            RolePlaceholderScreen(stringResource(R.string.nav_alerts)) { navController.popBackStack() }
+            AlertsScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.Messaging> {
             RolePlaceholderScreen(stringResource(R.string.nav_messaging)) { navController.popBackStack() }

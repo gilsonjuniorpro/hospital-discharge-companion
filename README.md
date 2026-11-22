@@ -50,15 +50,17 @@ After hospital discharge, avoidable readmissions often happen when home care bre
 
 ## Feature Coverage (Phase 1)
 
-- **Onboarding & Seeded Discharge Episodes:** 3 realistic seeded episodes — **Heart Failure (HFrEF)** (High Risk), **Post-Operative Laparoscopic Cholecystectomy** (Medium Risk), and **Community-Acquired Pneumonia** (Low Risk) — with discharge summary snapshot, care team metadata, readmission risk tier, simulated PHI teaching banner, and demo care-circle invite codes.
-- **Post-Discharge Care Plan:** Day-by-day grouped timeline across medication, vital check, wound care, diet, activity, education, lab, and appointment tasks; complete or skip with reason; clinician task reopen; physician care-plan revision history; on-device plain-text summary export; red-flag education cards.
-- **Medication Management:** Discharge reconciliation badges (`NEW`, `CHANGED`, `CONTINUED`, `STOPPED`), drug-interaction and allergen alerts, Take / Snooze / Skip dose actions with idempotency keys, caregiver dual attribution (`Maria Silva on behalf of João`), refill / out-of-stock resolution, mock pill-box photo attachment, and adherence percentage.
-- **Telemonitoring & Check-Ins:** Vitals entry with explicit clinical units (`mmHg`, `bpm`, `%`, `kg`, `°C`/`°F`), device-range validation, symptom severity sliders, Compose Canvas multi-day BP & dry-weight trend chart, today-vs-baseline comparison, one-tap abnormal BP demo preset, and Phase 2 Bluetooth wearable stub.
-- **Clinical Alerts & Escalation Ladder:** Automated rules engine (`EvaluateAlertRulesUseCase`) evaluating vitals, dry-weight gain, red-flag symptoms, missed doses, missed appointments, and HTTP 409 EHR conflicts; acknowledge, snooze, resolve, and escalate (`Patient/Family → Nurse Triage → Physician Review → Advise ER copy-only`) with full audit trail.
-- **Care Team Messaging & Appointments:** Episode-scoped thread with role labels, clinician-only Clinical Note toggle, quick-reply templates, urgent alert banner, mock read receipts; follow-up visits/labs/imaging/home health with attended (auto-adds post-visit task to care plan), missed (triggers alert), and reschedule request/nurse approval flow.
-- **Education & Teach-Back:** Plain-language guidance plus clinician detail toggle, progress tracking, and interactive teach-back comprehension checks.
-- **Nurse & Physician Workstations:** Active discharge census with risk/overdue/alert filters, triage queue, bulk check-in reminders, shift handoff summary; noise-reduced physician escalated queue, clinical sheet, disposition selector, and versioned care-plan amendment sign-off.
-- **Mock FHIR / EHR Sync & Demo Platform:** Pull discharge summary / push observations, simulated latency & failure modes (`200`, `409 Conflict`, `401 Unauthorized`, `Timeout`, `Offline`), interactive conflict resolution UI, in-app notification center, quiet hours & caregiver preferences, `hdc://` deep links, full demo reset, and live presentation script.
+- **Onboarding & Seeded Discharge Episodes:** 3 realistic seeded episodes — **Heart Failure (HFrEF)** (High Risk), **Post-Operative Laparoscopic Cholecystectomy** (Medium Risk), and **Community-Acquired Pneumonia** (Low Risk) — with discharge summary snapshot, care team metadata, readmission risk tier, verified consent badge, simulated PHI teaching banner, and demo care-circle invite codes.
+- **Post-Discharge Care Plan:** Day-by-day grouped timeline across medication, vital check, wound care, diet, activity, education, lab, and appointment tasks; completion progress bar and status filters (`All`, `Due`, `Completed`, `Skipped`); complete or skip with reason; clinician reopen & reassignment dialog (`Patient`, `Family Caregiver`, `Home Health Nurse`); physician care-plan revision history; on-device plain-text summary export; red-flag education cards.
+- **Medication Management:** Discharge reconciliation counts and filter chips (`NEW`, `CHANGED`, `CONTINUED`, `STOPPED`), drug-interaction and allergen alerts, Take / Snooze / Skip (with preset clinical skip reasons) actions with idempotency keys, caregiver dual attribution (`Maria Silva on behalf of João`), refill / out-of-stock resolution, mock pill-box photo attachment, and adherence percentage.
+- **Telemonitoring & Check-Ins:** Vitals entry with explicit clinical units (`mmHg`, `bpm`, `%`, `kg`, `°C`/`°F` live conversion), live blood-pressure classification (`Normal`, `Elevated`, `Stage 1`, `Stage 2`, `Crisis`), device-range validation, symptom severity sliders, Compose Canvas multi-day BP & dry-weight trend chart, today-vs-baseline comparison, one-tap high-BP and normal demo presets, missed-check-in risk-tier evaluation (`EvaluateMissedCheckInUseCase`), and Phase 2 Bluetooth wearable stub.
+- **Clinical Alerts & Escalation Ladder:** Automated rules engine (`EvaluateAlertRulesUseCase`) evaluating vitals, dry-weight gain, red-flag symptoms, missed doses, missed appointments, missed check-ins, and HTTP 409 EHR conflicts; visual 4-stage escalation ladder stepper (`Family → Nurse → Physician → Advise ER copy-only`), alert status filters, acknowledge/snooze/resolve/escalate actions, and full audit trail.
+- **Care Team Messaging & Appointments:** Episode-scoped thread with role labels, live thread search, `Clinical Notes Only` filter chip, clinician-only Clinical Note toggle, quick-reply templates, urgent alert banner, mock read receipts; follow-up visits/labs/imaging/home health with attended (auto-adds post-visit task), missed (triggers alert), and custom reschedule slot picker dialog + clinician approval flow.
+- **Education & Teach-Back:** Plain-language guidance plus clinician detail toggle, visual completion progress bar, localized content overlays, and interactive teach-back comprehension checks.
+- **Family Caregiver, Nurse & Physician Workstations:** Family invite dialog & permission cycling; Nurse active discharge census with risk/overdue/alert filters, triage queue, structured nursing note template picker, bulk check-in reminders, and exportable Shift Handoff report; Physician noise-reduced escalated queue, Clinical Sheet with inline discharge medications and signed revision history, disposition selector, and versioned care-plan amendment sign-off.
+- **Mock FHIR / EHR Sync & Demo Platform:** Pull discharge summary / push observations, inspectable mock FHIR R4 `Bundle` JSON preview (`FhirBundleSerializer`), simulated latency & failure modes (`200`, `409 Conflict`, `401 Unauthorized`, `Timeout`, `Offline`), interactive conflict resolution UI, 6 one-tap clinical scenario presets (`DemoScenarioRunner`), persistent **System / Light / Dark** theme mode, quiet-hours notification policy (`NotificationPolicy` + `LocalReminderDispatcher`), in-app notification center, `hdc://` deep links, full demo reset, and live presentation script.
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the layered UDF architecture, RBAC capability matrix, and Phase 2 FHIR R4 migration map, and [docs/DEMO_CANVAS.md](docs/DEMO_CANVAS.md) for the live presentation runbook and scenario matrix.
 
 ---
 
@@ -69,7 +71,9 @@ After hospital discharge, avoidable readmissions often happen when home care bre
 - **State & Architecture:** Unidirectional Data Flow (`StateFlow<UiState>`, `collectAsStateWithLifecycle`) following `Compose Screen → ViewModel → Repository → DataSource → MockApi`.
 - **DI & Persistence:** Hilt (`@HiltAndroidApp`, `@AndroidEntryPoint`, KSP) for swapping Phase 1 mock data sources with Phase 2 REST/FHIR adapters; Jetpack DataStore Preferences for persisting active role, selected episode, locale, temperature unit, and notification preferences.
 - **Localization (4 Locales):** English (`values/`), Brazilian Portuguese (`values-pt-rBR/`), Spanish (`values-es/`), and French (`values-fr/`), verified by `StringResourceParityTest` plus localized clinical seed overlays in `LocalizedClinicalPack`.
-- **Testing:** JUnit 4, Google Truth, `kotlinx-coroutines-test` with deterministic `ClinicalClock` and `IdGenerator` doubles.
+- **Testing:**
+  - **JVM Unit Tests (`app/src/test`):** 62 deterministic JUnit 4 + Google Truth + `kotlinx-coroutines-test` tests covering repositories, alert & missed-check-in rules, ViewModels, RBAC capability matrix, FHIR R4 Bundle serialization, quiet-hours notification policy, 4-role clinical loop, deep links, and 4-locale string parity.
+  - **Compose UI Instrumented Tests (`app/src/androidTest`):** 13 end-to-end Android instrumented UI tests covering all 14 screens (role selection, episode switching, care-plan progress & skip dialogs, medication reconciliation & presets, abnormal vitals alert trigger & escalation ladder, family consent & invite flow, nurse handoff & note templates, physician care-plan v2 sign-off, messaging, appointment rescheduling, education progress, FHIR Bundle preview & 409 conflict recovery, demo scenario presets, and theme mode switching).
 
 ```text
 app/src/main/java/com/hospitaldischargecompanion/
@@ -106,8 +110,11 @@ app/src/main/java/com/hospitaldischargecompanion/
 # Build debug APK
 ./gradlew assembleDebug
 
-# Run all JVM unit tests (repositories, ViewModels, 4-role clinical loop, 4-locale parity, deep links)
+# Run all 62 JVM unit tests (repositories, ViewModels, 4-role clinical loop, RBAC, 4-locale parity, deep links)
 ./gradlew testDebugUnitTest
+
+# Run all 13 Jetpack Compose UI instrumented tests on a connected device or emulator
+./gradlew connectedDebugAndroidTest
 
 # Run Android Lint checks
 ./gradlew lintDebug

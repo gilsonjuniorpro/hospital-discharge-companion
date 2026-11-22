@@ -70,4 +70,19 @@
     <string name="nav_appointments">Appointments</string>
     <string name="nav_education">Education</string>
     <string name="nav_ehr_sync">EHR Sync</string>
+
+    <string name="care_plan_revision_badge">Care Plan Revision v%1$d</string>
+    <string name="care_plan_history_title">Care Plan Revision History</string>
+    <string name="care_plan_export_title">Exported Care Plan Summary</string>
+    <string name="care_plan_day_header">Discharge Day %1$d</string>
+    <string name="care_plan_empty_title">No Tasks Scheduled</string>
+    <string name="care_plan_empty_subtitle">No post-discharge care plan tasks were found for this episode.</string>
+    <string name="care_plan_skip_dialog_title">Skip Task With Reason</string>
+    <string name="care_plan_skip_reason_hint">Reason (e.g., dizziness, out of supply)</string>
+    <string name="care_plan_skip_reason_format">Skipped reason: %1$s</string>
+    <string name="action_complete">Complete</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_reopen">Reopen</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_close">Close</string>
 </resources>

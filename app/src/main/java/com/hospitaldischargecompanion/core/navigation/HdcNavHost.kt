@@ -23,6 +23,7 @@ import com.hospitaldischargecompanion.feature.careplan.CarePlanScreen
 import com.hospitaldischargecompanion.feature.medications.MedicationScreen
 import com.hospitaldischargecompanion.feature.patient.PatientHomeScreen
 import com.hospitaldischargecompanion.feature.profile.ProfileSelectionScreen
+import com.hospitaldischargecompanion.feature.telemonitor.TelemonitoringScreen
 
 @Composable
 fun HdcNavHost(
@@ -83,7 +84,10 @@ fun HdcNavHost(
             MedicationScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.Telemonitoring> {
-            RolePlaceholderScreen(stringResource(R.string.nav_telemonitoring)) { navController.popBackStack() }
+            TelemonitoringScreen(
+                onBack = { navController.popBackStack() },
+                onOpenAlerts = { epId -> navController.navigate(HdcRoute.Alerts(epId)) }
+            )
         }
         composable<HdcRoute.Alerts> {
             RolePlaceholderScreen(stringResource(R.string.nav_alerts)) { navController.popBackStack() }

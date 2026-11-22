@@ -25,6 +25,7 @@ import com.hospitaldischargecompanion.feature.family.FamilyHomeScreen
 import com.hospitaldischargecompanion.feature.medications.MedicationScreen
 import com.hospitaldischargecompanion.feature.nurse.NurseWorkstationScreen
 import com.hospitaldischargecompanion.feature.patient.PatientHomeScreen
+import com.hospitaldischargecompanion.feature.physician.PhysicianWorkstationScreen
 import com.hospitaldischargecompanion.feature.profile.ProfileSelectionScreen
 import com.hospitaldischargecompanion.feature.telemonitor.TelemonitoringScreen
 
@@ -92,7 +93,12 @@ fun HdcNavHost(
             )
         }
         composable<HdcRoute.PhysicianWorkstation> {
-            RolePlaceholderScreen(stringResource(R.string.role_physician_title), navigateToProfile)
+            PhysicianWorkstationScreen(
+                onSwitchRole = navigateToProfile,
+                onOpenDemoControls = { navController.navigate(HdcRoute.DemoControls) },
+                onOpenCarePlan = { epId -> navController.navigate(HdcRoute.CarePlan(epId)) },
+                onOpenEhrSync = { epId -> navController.navigate(HdcRoute.EhrSync(epId)) }
+            )
         }
         composable<HdcRoute.CarePlan> {
             CarePlanScreen(onBack = { navController.popBackStack() })

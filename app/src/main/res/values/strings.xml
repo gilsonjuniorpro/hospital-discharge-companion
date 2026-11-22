@@ -258,4 +258,12 @@
     <string name="vital_temp_f_label">Temp (°F)</string>
     <string name="vital_bp_category_format">BP Classification: %1$s</string>
     <string name="vitals_demo_normal_preset">Normal Preset</string>
+
+    <string name="filter_active">Active</string>
+    <string name="filter_escalated">Escalated</string>
+    <string name="filter_resolved">Resolved</string>
+    <string name="ladder_stage_family">Family</string>
+    <string name="ladder_stage_nurse">Nurse</string>
+    <string name="ladder_stage_physician">Physician</string>
+    <string name="ladder_stage_er">Advise ER</string>
 </resources>

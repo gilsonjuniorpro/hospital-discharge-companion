@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -17,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +38,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.alerts.AlertSeverity
 import com.hospitaldischargecompanion.core.alerts.ClinicalAlert
+import com.hospitaldischargecompanion.core.alerts.EscalationStage
 import com.hospitaldischargecompanion.core.ui.components.EmptyStateCard
 import com.hospitaldischargecompanion.core.ui.components.ErrorRetryCard
 import com.hospitaldischargecompanion.core.ui.components.LoadingStateBox
@@ -79,6 +82,24 @@ fun AlertsScreen(
         ) {
             state.errorMessage?.let { error ->
                 item { ErrorRetryCard(message = error, onRetry = { viewModel.dismissError() }) }
+            }
+
+            item {
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    val chips = listOf(
+                        AlertListFilter.ALL to R.string.filter_all,
+                        AlertListFilter.ACTIVE to R.string.filter_active,
+                        AlertListFilter.ESCALATED to R.string.filter_escalated,
+                        AlertListFilter.RESOLVED to R.string.filter_resolved
+                    )
+                    items(chips) { (filter, res) ->
+                        FilterChip(
+                            selected = state.selectedFilter == filter,
+                            onClick = { viewModel.setFilter(filter) },
+                            label = { Text(text = stringResource(res)) }
+                        )
+                    }
+                }
             }
 
             if (state.alerts.isEmpty()) {
@@ -154,6 +175,8 @@ private fun AlertDetailCard(
                 color = MaterialTheme.colorScheme.primary
             )
 
+            EscalationLadderRow(currentStage = alert.escalationStage)
+
             Text(
                 text = stringResource(R.string.alert_audit_trail_title),
                 style = MaterialTheme.typography.labelLarge,
@@ -190,6 +213,37 @@ private fun AlertDetailCard(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun EscalationLadderRow(currentStage: EscalationStage) {
+    val stages = listOf(
+        EscalationStage.PATIENT_FAMILY to R.string.ladder_stage_family,
+        EscalationStage.NURSE_TRIAGE to R.string.ladder_stage_nurse,
+        EscalationStage.PHYSICIAN_REVIEW to R.string.ladder_stage_physician,
+        EscalationStage.ADVISE_ER_COPY_ONLY to R.string.ladder_stage_er
+    )
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        modifier = Modifier.padding(vertical = 4.dp)
+    ) {
+        items(stages) { (stage, labelRes) ->
+            val reached = stage.ordinal <= currentStage.ordinal
+            StatusPill(
+                label = stringResource(labelRes),
+                containerColor = if (reached) {
+                    if (stage == EscalationStage.ADVISE_ER_COPY_ONLY) HdcColors.StatusCriticalContainer else HdcColors.ClinicalTealContainer
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant
+                },
+                contentColor = if (reached) {
+                    if (stage == EscalationStage.ADVISE_ER_COPY_ONLY) HdcColors.StatusCritical else HdcColors.ClinicalTeal
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                }
+            )
         }
     }
 }

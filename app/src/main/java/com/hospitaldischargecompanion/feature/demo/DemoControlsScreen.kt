@@ -40,6 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.AppLocale
+import com.hospitaldischargecompanion.core.demo.DemoScenarioPreset
 import com.hospitaldischargecompanion.core.demo.SimulatedFailureMode
 import com.hospitaldischargecompanion.core.demo.TemperatureUnit
 import com.hospitaldischargecompanion.core.ui.components.DisclaimerBanner
@@ -111,6 +112,25 @@ fun DemoControlsScreen(
                         ) {
                             Icon(imageVector = Icons.Outlined.RestartAlt, contentDescription = null)
                             Text(text = stringResource(R.string.action_reset_demo), modifier = Modifier.padding(start = 6.dp))
+                        }
+                    }
+                }
+            }
+
+            item {
+                SectionHeader(title = stringResource(R.string.demo_scenarios_title))
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    val scenarios = listOf(
+                        DemoScenarioPreset.FULL_ADHERENCE to R.string.scenario_full_adherence,
+                        DemoScenarioPreset.MISSED_DOSE to R.string.scenario_missed_dose,
+                        DemoScenarioPreset.CRITICAL_BP to R.string.scenario_critical_bp,
+                        DemoScenarioPreset.EHR_CONFLICT_409 to R.string.scenario_ehr_conflict,
+                        DemoScenarioPreset.CAREGIVER_CONFIRMED_MEDS to R.string.scenario_caregiver_meds,
+                        DemoScenarioPreset.PHYSICIAN_AMENDED_PLAN to R.string.scenario_physician_amend
+                    )
+                    items(scenarios) { (preset, labelRes) ->
+                        OutlinedButton(onClick = { viewModel.applyScenario(preset) }) {
+                            Text(text = stringResource(labelRes))
                         }
                     }
                 }

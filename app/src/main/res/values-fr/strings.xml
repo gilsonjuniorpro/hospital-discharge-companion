@@ -293,4 +293,12 @@
 
     <string name="ehr_inspect_fhir_bundle">Inspecter Bundle FHIR</string>
     <string name="ehr_fhir_bundle_dialog_title">Charge Utile Simulée Bundle FHIR R4</string>
+
+    <string name="demo_scenarios_title">Scénarios Cliniques Rapides</string>
+    <string name="scenario_full_adherence">Observance Complète</string>
+    <string name="scenario_missed_dose">Dose Oubliée</string>
+    <string name="scenario_critical_bp">Alerte TA Critique</string>
+    <string name="scenario_ehr_conflict">Conflit DPI 409</string>
+    <string name="scenario_caregiver_meds">Aidant a Confirmé</string>
+    <string name="scenario_physician_amend">Médecin Plan v2</string>
 </resources>

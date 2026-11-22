@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.hospitaldischargecompanion.core.demo.AppLocale
 import com.hospitaldischargecompanion.core.demo.DemoNetworkConfig
 import com.hospitaldischargecompanion.core.demo.DemoNetworkSimulator
+import com.hospitaldischargecompanion.core.demo.DemoScenarioPreset
+import com.hospitaldischargecompanion.core.demo.DemoScenarioRunner
 import com.hospitaldischargecompanion.core.demo.DemoSessionRepository
 import com.hospitaldischargecompanion.core.demo.DemoSessionState
 import com.hospitaldischargecompanion.core.demo.MockClinicalStore
@@ -34,7 +36,8 @@ class DemoControlsViewModel @Inject constructor(
     private val sessionRepository: DemoSessionRepository,
     private val store: MockClinicalStore,
     private val networkSimulator: DemoNetworkSimulator,
-    private val notificationRepository: NotificationCenterRepository
+    private val notificationRepository: NotificationCenterRepository,
+    private val scenarioRunner: DemoScenarioRunner
 ) : ViewModel() {
 
     private val _banner = MutableStateFlow<String?>(null)
@@ -97,6 +100,12 @@ class DemoControlsViewModel @Inject constructor(
 
     fun markNotificationRead(id: String) {
         viewModelScope.launch { notificationRepository.markRead(id) }
+    }
+
+    fun applyScenario(preset: DemoScenarioPreset) {
+        viewModelScope.launch {
+            _banner.value = scenarioRunner.apply(preset)
+        }
     }
 
     fun resetDemonstration() {

@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.alerts.AlertSeverity
 import com.hospitaldischargecompanion.core.alerts.ClinicalAlert
 import com.hospitaldischargecompanion.core.alerts.EscalationStage
+import com.hospitaldischargecompanion.core.ui.HdcTestTags
 import com.hospitaldischargecompanion.core.ui.components.EmptyStateCard
 import com.hospitaldischargecompanion.core.ui.components.ErrorRetryCard
 import com.hospitaldischargecompanion.core.ui.components.LoadingStateBox
@@ -76,7 +78,8 @@ fun AlertsScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .testTag(HdcTestTags.SCREEN_ALERTS),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {

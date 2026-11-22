@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,6 +44,7 @@ import com.hospitaldischargecompanion.core.demo.AppLocale
 import com.hospitaldischargecompanion.core.demo.DemoScenarioPreset
 import com.hospitaldischargecompanion.core.demo.SimulatedFailureMode
 import com.hospitaldischargecompanion.core.demo.TemperatureUnit
+import com.hospitaldischargecompanion.core.ui.HdcTestTags
 import com.hospitaldischargecompanion.core.ui.components.DisclaimerBanner
 import com.hospitaldischargecompanion.core.ui.components.SectionHeader
 import com.hospitaldischargecompanion.core.ui.theme.HdcColors
@@ -75,7 +77,8 @@ fun DemoControlsScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .testTag(HdcTestTags.SCREEN_DEMO_CONTROLS),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {

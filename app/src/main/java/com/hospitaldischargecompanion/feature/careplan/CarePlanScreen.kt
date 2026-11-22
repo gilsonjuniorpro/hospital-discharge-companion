@@ -39,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -47,6 +48,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.discharge.CarePlanTask
 import com.hospitaldischargecompanion.core.discharge.CarePlanTaskStatus
+import com.hospitaldischargecompanion.core.ui.HdcTestTags
 import com.hospitaldischargecompanion.core.ui.components.EmptyStateCard
 import com.hospitaldischargecompanion.core.ui.components.ErrorRetryCard
 import com.hospitaldischargecompanion.core.ui.components.LoadingStateBox
@@ -116,7 +118,8 @@ fun CarePlanScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
+                .testTag(HdcTestTags.SCREEN_CARE_PLAN),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {

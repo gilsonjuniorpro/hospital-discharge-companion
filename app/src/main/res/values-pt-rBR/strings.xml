@@ -280,4 +280,7 @@
 
     <string name="physician_active_meds_header">Resumo de Medicações de Alta</string>
     <string name="physician_signed_revisions_header">Revisões Assinadas do Plano</string>
+
+    <string name="messaging_filter_clinical_only">Apenas Notas Clínicas</string>
+    <string name="messaging_search_hint">Buscar mensagens na conversa</string>
 </resources>

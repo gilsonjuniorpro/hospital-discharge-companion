@@ -231,4 +231,10 @@
     <string name="about_presentation_script_title">Roteiro de Demonstração Clínica (5–7 min)</string>
     <string name="about_presentation_script_body">1. Paciente: abra o caso de Insuficiência Cardíaca, confirme medicações da manhã e registre PA elevada (172/104 mmHg).\n2. Família: veja a orientação do alerta disparado e escale em nome do paciente.\n3. Enfermagem: faça triagem, solicite rechecagem + nota clínica e escale ao Médico.\n4. Médico: revise a ficha clínica, emende o Plano com pesagem noturna e assine v2.\n5. EHR Sync: ative Conflito HTTP 409, envie observações, reconcilie o conflito e sincronize.\n6. Idioma: alterne EN → pt-BR / es / fr sem sair do episódio.</string>
     <string name="about_jump_hf_case">Abrir Caso de Insuficiência Cardíaca</string>
+
+    <string name="med_reconciliation_summary">Reconciliação: %1$d nova(s) · %2$d alterada(s) · %3$d mantida(s) · %4$d suspensa(s)</string>
+    <string name="med_filter_new">Novas</string>
+    <string name="med_filter_changed">Alteradas</string>
+    <string name="med_filter_continued">Mantidas</string>
+    <string name="med_filter_stopped">Suspensas</string>
 </resources>

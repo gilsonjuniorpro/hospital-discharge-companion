@@ -231,4 +231,10 @@
     <string name="about_presentation_script_title">5–7 Minute Clinical Coordination Walkthrough</string>
     <string name="about_presentation_script_body">1. Patient: open Heart Failure episode, confirm morning meds, and submit elevated BP (172/104 mmHg).\n2. Family: review triggered alert guidance and escalate on behalf of the patient.\n3. Nurse: triage queue, send vitals recheck + clinical note, and escalate to Physician.\n4. Physician: inspect clinical sheet, amend Care Plan with evening weight check, and sign off v2.\n5. EHR Sync: toggle HTTP 409 Conflict, push observations, reconcile conflict, and sync.\n6. Language: switch EN → pt-BR / es / fr live without leaving the episode.</string>
     <string name="about_jump_hf_case">Jump to Heart Failure Case</string>
+
+    <string name="med_reconciliation_summary">Reconciliation: %1$d new · %2$d changed · %3$d continued · %4$d stopped</string>
+    <string name="med_filter_new">New</string>
+    <string name="med_filter_changed">Changed</string>
+    <string name="med_filter_continued">Continued</string>
+    <string name="med_filter_stopped">Stopped</string>
 </resources>

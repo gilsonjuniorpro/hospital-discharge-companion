@@ -231,4 +231,10 @@
     <string name="about_presentation_script_title">Recorrido Clínico en Vivo (5–7 min)</string>
     <string name="about_presentation_script_body">1. Paciente: abre el episodio de Insuficiencia Cardíaca, confirma medicación matutina y registra PA elevada (172/104 mmHg).\n2. Familia: revisa la orientación de la alerta y escala en nombre del paciente.\n3. Enfermería: revisa triaje, solicita recontrol + nota clínica y escala al Médico.\n4. Médico: inspecciona ficha clínica, enmienda el Plan con pesaje nocturno y firma v2.\n5. EHR Sync: activa Conflicto HTTP 409, envía observaciones, concilia el conflicto y sincroniza.\n6. Idioma: cambia EN → pt-BR / es / fr sin abandonar el episodio.</string>
     <string name="about_jump_hf_case">Ir al Caso de Insuficiencia Cardíaca</string>
+
+    <string name="med_reconciliation_summary">Conciliación: %1$d nueva(s) · %2$d cambiada(s) · %3$d continuada(s) · %4$d suspendida(s)</string>
+    <string name="med_filter_new">Nuevos</string>
+    <string name="med_filter_changed">Cambiados</string>
+    <string name="med_filter_continued">Continuados</string>
+    <string name="med_filter_stopped">Suspendidos</string>
 </resources>

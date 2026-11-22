@@ -231,4 +231,10 @@
     <string name="about_presentation_script_title">Parcours de Démonstration Clinique (5–7 min)</string>
     <string name="about_presentation_script_body">1. Patient : ouvrez le cas Insuffisance Cardiaque, confirmez les médicaments du matin et saisissez une TA élevée (172/104 mmHg).\n2. Proche aidant : consultez les consignes de l\'alerte et escaladez au nom du patient.\n3. Infirmier : triez la file, demandez un recontrôle + note clinique et escaladez au Médecin.\n4. Médecin : consultez la fiche clinique, ajoutez une pesée du soir et signez le plan v2.\n5. Synchro DPI : activez le Conflit HTTP 409, envoyez les constantes, résolvez le conflit et synchronisez.\n6. Langue : basculez EN → pt-BR / es / fr sans quitter l\'épisode.</string>
     <string name="about_jump_hf_case">Ouvrir le Cas Insuffisance Cardiaque</string>
+
+    <string name="med_reconciliation_summary">Conciliation : %1$d nouveau(x) · %2$d modifié(s) · %3$d poursuivi(s) · %4$d arrêté(s)</string>
+    <string name="med_filter_new">Nouveaux</string>
+    <string name="med_filter_changed">Modifiés</string>
+    <string name="med_filter_continued">Poursuivis</string>
+    <string name="med_filter_stopped">Arrêtés</string>
 </resources>

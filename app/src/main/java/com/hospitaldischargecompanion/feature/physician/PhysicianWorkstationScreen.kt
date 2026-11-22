@@ -236,6 +236,32 @@ fun PhysicianWorkstationScreen(
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
+                            Text(
+                                text = stringResource(R.string.physician_active_meds_header),
+                                style = MaterialTheme.typography.labelLarge,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                            state.medications.forEach { med ->
+                                Text(
+                                    text = "• [${med.changeStatus.name}] ${med.name} ${med.strengthAndForm} (${med.todayDoseStatus.name})",
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
+                            if (state.revisions.isNotEmpty()) {
+                                Text(
+                                    text = stringResource(R.string.physician_signed_revisions_header),
+                                    style = MaterialTheme.typography.labelLarge,
+                                    fontWeight = FontWeight.SemiBold,
+                                    modifier = Modifier.padding(top = 4.dp)
+                                )
+                                state.revisions.take(3).forEach { rev ->
+                                    Text(
+                                        text = "• v${rev.revisionNumber} (${rev.authorName}): ${rev.changeSummary}",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            }
                             OutlinedButton(onClick = { onOpenCarePlan(ep.id) }) {
                                 Text(text = stringResource(R.string.physician_inspect_care_plan))
                             }

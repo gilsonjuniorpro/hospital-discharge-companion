@@ -277,4 +277,7 @@
 
     <string name="nurse_export_handoff">Exporter Relève</string>
     <string name="nurse_handoff_dialog_title">Rapport de Relève Infirmière</string>
+
+    <string name="physician_active_meds_header">Résumé des Traitements de Sortie</string>
+    <string name="physician_signed_revisions_header">Révisions Signées du Plan</string>
 </resources>

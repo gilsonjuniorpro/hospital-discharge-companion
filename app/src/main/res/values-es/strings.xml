@@ -288,4 +288,6 @@
     <string name="appointment_slot_hint">Fecha y horario preferidos</string>
     <string name="appointment_slot_morning">Mañana por la Mañana · 08:30</string>
     <string name="appointment_slot_afternoon">Próxima Tarde · 14:30</string>
+
+    <string name="education_progress_format">Completadas %1$d de %2$d guías de alta (%3$d%%)</string>
 </resources>

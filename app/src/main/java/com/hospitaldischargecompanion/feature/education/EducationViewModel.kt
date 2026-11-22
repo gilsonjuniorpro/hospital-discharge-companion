@@ -9,6 +9,7 @@ import com.hospitaldischargecompanion.core.demo.DomainResult
 import com.hospitaldischargecompanion.core.demo.UserRole
 import com.hospitaldischargecompanion.core.education.EducationModuleItem
 import com.hospitaldischargecompanion.core.education.EducationRepository
+import com.hospitaldischargecompanion.core.education.ModuleProgress
 import com.hospitaldischargecompanion.core.navigation.HdcRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,6 +23,9 @@ import javax.inject.Inject
 data class EducationUiState(
     val activeRole: UserRole = UserRole.PATIENT,
     val showClinicalDetail: Boolean = false,
+    val completedCount: Int = 0,
+    val totalCount: Int = 0,
+    val completionPercent: Int = 0,
     val modules: List<EducationModuleItem> = emptyList(),
     val quizFeedback: String? = null,
     val isLoading: Boolean = true
@@ -46,9 +50,15 @@ class EducationViewModel @Inject constructor(
         _quizFeedback
     ) { session, modules, showClinical, feedback ->
         val role = session.activeRole ?: UserRole.PATIENT
+        val completed = modules.count { it.progress == ModuleProgress.COMPLETED }
+        val total = modules.size
+        val pct = if (total == 0) 0 else (completed * 100) / total
         EducationUiState(
             activeRole = role,
             showClinicalDetail = showClinical || role.isClinician,
+            completedCount = completed,
+            totalCount = total,
+            completionPercent = pct,
             modules = modules,
             quizFeedback = feedback,
             isLoading = false

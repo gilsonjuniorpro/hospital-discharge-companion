@@ -13,6 +13,8 @@ import com.hospitaldischargecompanion.core.demo.TemperatureUnit
 import com.hospitaldischargecompanion.core.demo.UserRole
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisode
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisodeRepository
+import com.hospitaldischargecompanion.core.i18n.BloodPressureCategory
+import com.hospitaldischargecompanion.core.i18n.ClinicalFormatter
 import com.hospitaldischargecompanion.core.navigation.HdcRoute
 import com.hospitaldischargecompanion.core.telemonitor.NewCheckInRequest
 import com.hospitaldischargecompanion.core.telemonitor.TelemonitoringRepository
@@ -50,6 +52,7 @@ data class TelemonitoringUiState(
     val checkIns: List<VitalCheckIn> = emptyList(),
     val wearables: List<WearableDeviceSummary> = emptyList(),
     val draft: CheckInFormDraft = CheckInFormDraft(),
+    val draftBpCategory: BloodPressureCategory? = null,
     val triggeredAlerts: List<ClinicalAlert> = emptyList(),
     val lastSuccessNotice: Boolean = false,
     val errorMessage: String? = null,
@@ -86,6 +89,15 @@ class TelemonitoringViewModel @Inject constructor(
             checkIns = checkIns,
             wearables = wearables,
             draft = draft,
+            draftBpCategory = run {
+                val sys = draft.systolicInput.toIntOrNull()
+                val dia = draft.diastolicInput.toIntOrNull()
+                if (sys != null && dia != null && sys > dia) {
+                    ClinicalFormatter.classifyBloodPressure(sys, dia)
+                } else {
+                    null
+                }
+            },
             triggeredAlerts = feedback.first,
             lastSuccessNotice = feedback.second,
             errorMessage = feedback.third,
@@ -99,6 +111,23 @@ class TelemonitoringViewModel @Inject constructor(
 
     fun updateDraft(transform: (CheckInFormDraft) -> CheckInFormDraft) {
         _draft.update(transform)
+    }
+
+    fun fillNormalBaselinePreset() {
+        val base = uiState.value.baseline
+        val tempDisplay = if (uiState.value.temperatureUnit == TemperatureUnit.FAHRENHEIT) "98.1" else "36.7"
+        _draft.value = CheckInFormDraft(
+            systolicInput = "124",
+            diastolicInput = "76",
+            heartRateInput = "74",
+            spo2Input = "97",
+            weightInput = String.format(java.util.Locale.US, "%.1f", base?.dryWeightKg ?: 76.5),
+            temperatureCInput = tempDisplay,
+            painScore = 1,
+            dyspneaSeverity = 0,
+            swellingSeverity = 0,
+            notes = "Feeling well at home; dry weight stable."
+        )
     }
 
     fun fillOutOfRangeBpPreset() {
@@ -124,7 +153,14 @@ class TelemonitoringViewModel @Inject constructor(
         val hr = d.heartRateInput.toIntOrNull()
         val spo2 = d.spo2Input.toIntOrNull()
         val wt = d.weightInput.toDoubleOrNull()
-        val temp = d.temperatureCInput.toDoubleOrNull()
+        val rawTemp = d.temperatureCInput.toDoubleOrNull()
+        val temp = rawTemp?.let {
+            if (state.temperatureUnit == TemperatureUnit.FAHRENHEIT) {
+                ClinicalFormatter.fahrenheitToCelsius(it)
+            } else {
+                it
+            }
+        }
 
         if (sys == null || dia == null || hr == null || spo2 == null || wt == null || temp == null) {
             _feedback.value = Triple(emptyList(), false, "Enter valid numeric values for all vital signs.")

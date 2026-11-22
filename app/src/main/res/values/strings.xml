@@ -254,4 +254,8 @@
     <string name="assignee_patient">Patient</string>
     <string name="assignee_caregiver">Family Caregiver</string>
     <string name="assignee_home_nurse">Home Health Nurse</string>
+
+    <string name="vital_temp_f_label">Temp (°F)</string>
+    <string name="vital_bp_category_format">BP Classification: %1$s</string>
+    <string name="vitals_demo_normal_preset">Normal Preset</string>
 </resources>

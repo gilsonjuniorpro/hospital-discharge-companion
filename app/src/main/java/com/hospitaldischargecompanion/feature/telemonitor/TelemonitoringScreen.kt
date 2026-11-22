@@ -227,9 +227,23 @@ fun TelemonitoringScreen(
                             )
                             VitalTextField(
                                 value = d.temperatureCInput,
-                                label = stringResource(R.string.vital_temp_c_label),
+                                label = stringResource(
+                                    if (state.temperatureUnit == TemperatureUnit.FAHRENHEIT) {
+                                        R.string.vital_temp_f_label
+                                    } else {
+                                        R.string.vital_temp_c_label
+                                    }
+                                ),
                                 onValueChange = { v -> viewModel.updateDraft { it.copy(temperatureCInput = v) } },
                                 modifier = Modifier.weight(1f)
+                            )
+                        }
+
+                        state.draftBpCategory?.let { category ->
+                            Text(
+                                text = stringResource(R.string.vital_bp_category_format, category.name.replace('_', ' ')),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 

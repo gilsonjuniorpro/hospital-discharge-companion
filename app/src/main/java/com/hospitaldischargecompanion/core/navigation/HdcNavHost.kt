@@ -20,9 +20,11 @@ import androidx.navigation.compose.rememberNavController
 import com.hospitaldischargecompanion.R
 import com.hospitaldischargecompanion.core.demo.UserRole
 import com.hospitaldischargecompanion.feature.alerts.AlertsScreen
+import com.hospitaldischargecompanion.feature.appointments.AppointmentsScreen
 import com.hospitaldischargecompanion.feature.careplan.CarePlanScreen
 import com.hospitaldischargecompanion.feature.family.FamilyHomeScreen
 import com.hospitaldischargecompanion.feature.medications.MedicationScreen
+import com.hospitaldischargecompanion.feature.messaging.MessagingScreen
 import com.hospitaldischargecompanion.feature.nurse.NurseWorkstationScreen
 import com.hospitaldischargecompanion.feature.patient.PatientHomeScreen
 import com.hospitaldischargecompanion.feature.physician.PhysicianWorkstationScreen
@@ -116,10 +118,10 @@ fun HdcNavHost(
             AlertsScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.Messaging> {
-            RolePlaceholderScreen(stringResource(R.string.nav_messaging)) { navController.popBackStack() }
+            MessagingScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.Appointments> {
-            RolePlaceholderScreen(stringResource(R.string.nav_appointments)) { navController.popBackStack() }
+            AppointmentsScreen(onBack = { navController.popBackStack() })
         }
         composable<HdcRoute.Education> {
             RolePlaceholderScreen(stringResource(R.string.nav_education)) { navController.popBackStack() }

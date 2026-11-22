@@ -10,6 +10,7 @@ import com.hospitaldischargecompanion.core.discharge.CarePlanTask
 import com.hospitaldischargecompanion.core.discharge.CarePlanTaskStatus
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisode
 import com.hospitaldischargecompanion.core.discharge.DischargeEpisodeRepository
+import com.hospitaldischargecompanion.core.i18n.LocalizedClinicalPack
 import com.hospitaldischargecompanion.core.medication.AdherenceSummary
 import com.hospitaldischargecompanion.core.medication.MedicationRepository
 import com.hospitaldischargecompanion.core.telemonitor.TelemonitoringRepository
@@ -58,13 +59,14 @@ class PatientHomeViewModel @Inject constructor(
                 telemonitoringRepository.observeCheckIns(episodeId),
                 alertRepository.observeEpisodeAlerts(episodeId)
             ) { allEpisodes, tasks, adherence, checkIns, alerts ->
-                val activeEpisode = allEpisodes.firstOrNull { it.id == episodeId } ?: allEpisodes.firstOrNull()
+                val localizedEpisodes = allEpisodes.map { LocalizedClinicalPack.applyTo(it, session.locale) }
+                val activeEpisode = localizedEpisodes.firstOrNull { it.id == episodeId } ?: localizedEpisodes.firstOrNull()
                 val dueOrOverdue = tasks.filter {
                     it.status == CarePlanTaskStatus.DUE || it.status == CarePlanTaskStatus.OVERDUE
                 }
                 PatientHomeUiState(
                     episode = activeEpisode,
-                    allEpisodes = allEpisodes,
+                    allEpisodes = localizedEpisodes,
                     dueTasksCount = dueOrOverdue.size,
                     completedTasksCount = tasks.count { it.status == CarePlanTaskStatus.COMPLETED },
                     totalTasksCount = tasks.size,

@@ -49,24 +49,27 @@ class MedicationViewModel @Inject constructor(
     private val idGenerator: IdGenerator
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.Medications>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Medications>().episodeId }.getOrDefault("ep-hf-001")
+    private val highlightMedicationId: String? = savedStateHandle.get<String>("highlightMedicationId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.Medications>().highlightMedicationId }.getOrNull()
     private val _errorMessage = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<MedicationUiState> = combine(
-        episodeRepository.observeEpisode(route.episodeId),
+        episodeRepository.observeEpisode(episodeId),
         sessionRepository.sessionState,
-        medicationRepository.observeMedications(route.episodeId),
-        medicationRepository.observeWarnings(route.episodeId),
+        medicationRepository.observeMedications(episodeId),
+        medicationRepository.observeWarnings(episodeId),
         combine(
-            medicationRepository.observeAdherence(route.episodeId),
-            medicationRepository.observeDoseLogs(route.episodeId),
+            medicationRepository.observeAdherence(episodeId),
+            medicationRepository.observeDoseLogs(episodeId),
             _errorMessage
         ) { adh, logs, err -> Triple(adh, logs, err) }
     ) { episode, session, meds, warnings, (adherence, logs, error) ->
         MedicationUiState(
             episode = episode,
             activeRole = session.activeRole ?: UserRole.PATIENT,
-            highlightMedicationId = route.highlightMedicationId,
+            highlightMedicationId = highlightMedicationId,
             medications = meds,
             warnings = warnings,
             adherence = adherence,

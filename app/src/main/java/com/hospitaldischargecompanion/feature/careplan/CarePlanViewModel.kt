@@ -40,15 +40,16 @@ class CarePlanViewModel @Inject constructor(
     private val carePlanRepository: CarePlanRepository
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<HdcRoute.CarePlan>()
+    private val episodeId: String = savedStateHandle.get<String>("episodeId")
+        ?: runCatching { savedStateHandle.toRoute<HdcRoute.CarePlan>().episodeId }.getOrDefault("ep-hf-001")
     private val _exportedSummary = MutableStateFlow<String?>(null)
     private val _errorMessage = MutableStateFlow<String?>(null)
 
     val uiState: StateFlow<CarePlanUiState> = combine(
-        episodeRepository.observeEpisode(route.episodeId),
+        episodeRepository.observeEpisode(episodeId),
         sessionRepository.sessionState,
-        carePlanRepository.observeTasks(route.episodeId),
-        carePlanRepository.observeRevisions(route.episodeId),
+        carePlanRepository.observeTasks(episodeId),
+        carePlanRepository.observeRevisions(episodeId),
         combine(_exportedSummary, _errorMessage) { exp, err -> exp to err }
     ) { episode, session, tasks, revisions, (exported, error) ->
         CarePlanUiState(
